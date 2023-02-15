@@ -4,6 +4,39 @@ import os
 import pandas as pd
 os.system('clear')
 
+class team(object):
+    def __init__(object, name, position, data):
+        self.name = name
+        self.position = position
+        self.data = data
+
+    def getPosition(self):
+        return self.position
+
+    def getName(self):
+        return self.name
+
+    def getGamesPlayed(self):
+        #Code to get games played from data
+        return 0
+    
+    def getGamesWon(self):
+        #Code to get games won
+        return 0
+
+    def getDraws(self):
+        #Code to get number of times drawn
+        return 0
+
+    def getGoals(self):
+        #Code to get number of goals scored
+        return 0
+
+    def getGoalsConceded(self):
+        #Code to get goals conceded
+        return 0
+
+
 class stats(object):
     def __init__(self, home, away):
         self.df = pd.read_csv('csv/soccer-standings.csv', header=1)
@@ -12,7 +45,7 @@ class stats(object):
         self.rows, self.columns = self.df.shape
         self.teams = []
 
-
+   
     def mapTeams(self):
         for i in range(self.rows-1):
             self.teams.append(self.df.loc[i, :].values.flatten().tolist()) #Append to list of teams
@@ -25,6 +58,9 @@ class stats(object):
                 return True
 
         return False
+    
+    def getTeams(self):
+        return self.teams
 
 
 def teams():
