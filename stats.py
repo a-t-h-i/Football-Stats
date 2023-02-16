@@ -70,25 +70,27 @@ def teams():
 homeTeam, awayTeam = teams()
 run = stats(homeTeam, awayTeam) #Instantiate stats class
 run.mapTeams() #Save list of teams from CSV file
-teams = run.getTeams()
+teams
+teamsList= run.getTeams()
 teamObjects = []
 
 #Add teams to list of objects
-for i in range(len(teams)-1):
-    teamObjects.append(team(teams[i][0], i+1, teams[i]))
+for i in range(len(teamsList)-1):
+    teamObjects.append(team(teamsList[i][0], i+1, teamsList[i]))
 
 found = False
 
 while not found:
 
     if run.teamFound(homeTeam) and run.teamFound(awayTeam):
-        print(f"Name: {teamObjects[0].getName()}")
-        print(f"Posision: {teamObjects[0].getPosition()}")
-        print(f"Matches won: {teamObjects[0].getGamesWon()}")
-        print(f"Draws: {teamObjects[0].getDraws()}")
-        print(f"Conceded: {teamObjects[0].getGoalsConceded()}")
-        print(f"Loses: {teamObjects[0].getLoses()}")
-        print(f"Played: {teamObjects[0].getGamesPlayed()}")
+        print(f"Name: {teamObjects[4].getName()}")
+        print(f"Posision: {teamObjects[4].getPosition()}")
+        print(f"Matches won: {teamObjects[4].getGamesWon()}")
+        print(f"Draws: {teamObjects[4].getDraws()}")
+        print(f"Conceded: {teamObjects[4].getGoalsConceded()}")
+        print(f"Loses: {teamObjects[4].getLoses()}")
+        print(f"Played: {teamObjects[4].getGamesPlayed()}")
+        print(f"Goals: {teamObjects[4].getGoals()}")
         found = True
     else:
         os.system('clear')
