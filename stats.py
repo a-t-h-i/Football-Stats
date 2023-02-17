@@ -74,48 +74,49 @@ def teams():
     away = input("Away team: ")
     return (home, away)
 
-homeTeam, awayTeam = teams()
-run = stats(homeTeam, awayTeam) #Instantiate stats class
-run.mapTeams() #Save list of teams from CSV file
-teams
-teamsList= run.getTeams()
-teamObjects = []
+def main():
+    homeTeam, awayTeam = teams()
+    run = stats(homeTeam, awayTeam) #Instantiate stats class
+    run.mapTeams() #Save list of teams from CSV file
+    teamsList= run.getTeams()
+    teamObjects = []
 
-#Add teams to list of objects
-for i in range(len(teamsList)-1):
-    teamObjects.append(team(teamsList[i][0], teamsList[i]))
+    #Add teams to list of objects
+    for i in range(len(teamsList)-1):
+        teamObjects.append(team(teamsList[i][0], teamsList[i]))
 
-found = False
+    found = False
 
-while not found:
+    while not found:
 
-    if run.teamFound(homeTeam) and run.teamFound(awayTeam):
-        os.system('clear')
-        for i in range(len(teamObjects) -1):
-            if homeTeam.upper() == teamObjects[i].getName().upper():
-                print("--------------Home Team--------------")
-                print(f"Team: {teamObjects[i].getName()}")
-                print(f"Position: {teamObjects[i].getPosition()}")
-                print(f"Games played: {teamObjects[i].getGamesPlayed()}")
-                print(f"Games won: {teamObjects[i].getGamesWon()}")
-                print(f"Games lost: {teamObjects[i].getLoses()}")
-                print(f"Draws: {teamObjects[i].getDraws()}")
-                print("\n")
-            elif awayTeam.upper() == teamObjects[i].getName().upper():
-                print("--------------Away Team----------")
-                print(f"Team: {teamObjects[i].getName()}")
-                print(f"Position: {teamObjects[i].getPosition()}")
-                print(f"Games played: {teamObjects[i].getGamesPlayed()}")
-                print(f"Games won: {teamObjects[i].getGamesWon()}")
-                print(f"Games lost: {teamObjects[i].getLoses()}")
-                print(f"Draws: {teamObjects[i].getDraws()}")
+        if run.teamFound(homeTeam) and run.teamFound(awayTeam):
+            os.system('clear')
+            for i in range(len(teamObjects) -1):
+                if homeTeam.upper() == teamObjects[i].getName().upper():
+                    print("--------------Home Team--------------")
+                    print(f"Team: {teamObjects[i].getName()}")
+                    print(f"Position: {teamObjects[i].getPosition()}")
+                    print(f"Games played: {teamObjects[i].getGamesPlayed()}")
+                    print(f"Games won: {teamObjects[i].getGamesWon()}")
+                    print(f"Games lost: {teamObjects[i].getLoses()}")
+                    print(f"Draws: {teamObjects[i].getDraws()}")
+                    print("\n")
+                elif awayTeam.upper() == teamObjects[i].getName().upper():
+                    print("--------------Away Team----------")
+                    print(f"Team: {teamObjects[i].getName()}")
+                    print(f"Position: {teamObjects[i].getPosition()}")
+                    print(f"Games played: {teamObjects[i].getGamesPlayed()}")
+                    print(f"Games won: {teamObjects[i].getGamesWon()}")
+                    print(f"Games lost: {teamObjects[i].getLoses()}")
+                    print(f"Draws: {teamObjects[i].getDraws()}")
 
-        found = True
-    else:
-        os.system('clear')
-        print("Please enter correct team names...")
-        homeTeam, awayTeam = teams()
+            found = True
+        else:
+            os.system('clear')
+            print("Please enter correct team names...")
+            homeTeam, awayTeam = teams()
 
 
+main()
 # scraper.getHTML("https://www.rotowire.com/soccer/league-table.php")
 
