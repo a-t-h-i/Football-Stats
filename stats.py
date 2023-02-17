@@ -6,13 +6,12 @@ import pandas as pd
 os.system('clear')
 
 class team(object):
-    def __init__(self, name, position, data):
+    def __init__(self, name, data):
         self.name = name
-        self.position = position
         self.data = data
 
     def getPosition(self):
-        return self.position
+        return self.data[1]
 
     def getName(self):
         return self.name
@@ -42,9 +41,10 @@ class stats(object):
         self.csvPath = "csv/"
         self.csvFiles = glob.glob(self.csvPath + "/*.csv")
         self.dfList = []
+        
         [self.dfList.append(self.readFile(file)) for file in self.csvFiles]
-        print(self.dfList)
-        self.df = pd.concat(self.dfList, axis=0, ignore_index=True)
+
+        self.df = pd.concat(self.dfList, ignore_index=True)
         self.rows, self.columns = self.df.shape #Get number of rows and columns 
         self.teams = []
     
@@ -83,21 +83,33 @@ teamObjects = []
 
 #Add teams to list of objects
 for i in range(len(teamsList)-1):
-    teamObjects.append(team(teamsList[i][0], i+1, teamsList[i]))
+    teamObjects.append(team(teamsList[i][0], teamsList[i]))
 
 found = False
 
 while not found:
 
     if run.teamFound(homeTeam) and run.teamFound(awayTeam):
-        print(f"Name: {teamObjects[4].getName()}")
-        print(f"Posision: {teamObjects[4].getPosition()}")
-        print(f"Matches won: {teamObjects[4].getGamesWon()}")
-        print(f"Draws: {teamObjects[4].getDraws()}")
-        print(f"Conceded: {teamObjects[4].getGoalsConceded()}")
-        print(f"Loses: {teamObjects[4].getLoses()}")
-        print(f"Played: {teamObjects[4].getGamesPlayed()}")
-        print(f"Goals: {teamObjects[4].getGoals()}")
+        os.system('clear')
+        for i in range(len(teamObjects) -1):
+            if homeTeam.upper() == teamObjects[i].getName().upper():
+                print("--------------Home Team--------------")
+                print(f"Team: {teamObjects[i].getName()}")
+                print(f"Position: {teamObjects[i].getPosition()}")
+                print(f"Games played: {teamObjects[i].getGamesPlayed()}")
+                print(f"Games won: {teamObjects[i].getGamesWon()}")
+                print(f"Games lost: {teamObjects[i].getLoses()}")
+                print(f"Draws: {teamObjects[i].getDraws()}")
+                print("\n")
+            elif awayTeam.upper() == teamObjects[i].getName().upper():
+                print("--------------Away Team----------")
+                print(f"Team: {teamObjects[i].getName()}")
+                print(f"Position: {teamObjects[i].getPosition()}")
+                print(f"Games played: {teamObjects[i].getGamesPlayed()}")
+                print(f"Games won: {teamObjects[i].getGamesWon()}")
+                print(f"Games lost: {teamObjects[i].getLoses()}")
+                print(f"Draws: {teamObjects[i].getDraws()}")
+
         found = True
     else:
         os.system('clear')
