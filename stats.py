@@ -1,6 +1,7 @@
 from scraper import scraper
 import csv
 import os
+import glob
 import pandas as pd
 os.system('clear')
 
@@ -37,12 +38,18 @@ class team(object):
 
 class stats(object):
     def __init__(self, home, away):
-        self.df = pd.read_csv('csv/soccer-standings.csv', header=1)
-        self.homeTeam = home
-        self.awayTeam = away
-        self.rows, self.columns = self.df.shape
+        #self.df = pd.read_csv('csv/soccer-standings.csv', header=1)
+        self.csvPath = "csv/"
+        self.csvFiles = glob.glob(self.csvPath + "/*.csv")
+        self.dfList = []
+        [self.dfList.append(self.readFile(file)) for file in self.csvFiles]
+        print(self.dfList)
+        self.df = pd.concat(self.dfList, axis=0, ignore_index=True)
+        self.rows, self.columns = self.df.shape #Get number of rows and columns 
         self.teams = []
-
+    
+    def readFile(self, file):
+        return pd.read_csv(file, header = 1)
    
     def mapTeams(self):
         for i in range(self.rows-1):
