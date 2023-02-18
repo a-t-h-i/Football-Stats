@@ -1,4 +1,4 @@
-from scraper import scraper
+from ai import prediction
 import csv
 import os
 import glob
@@ -74,6 +74,40 @@ def teams():
     away = input("Away team: ")
     return (home, away)
 
+def generateStats(data):
+    name = data[0].getName()
+    position = data[0].getPosition()
+    played = data[0].getGamesPlayed()
+    won = data[0].getGamesWon()
+    loses = data[0].getLoses()
+    draws = data[0].getDraws()
+    goals = data[0].getGoals()
+    conceded = data[0].getGoalsConceded()
+
+    return f"""
+    Team name: {name}
+    Position: {position}
+    Games Played: {played}
+    Games Won: {won}
+    Games Lost: {lost}
+    Draws: {draws}
+    Goals Scored: {goals}
+    Goals Conceded: {conceded}
+    """
+
+def aiPrompt(homeTeam, awayTeam):
+
+    return f"""
+Asume the role of a soccer commentator.
+Given these stats for the home team:
+{homeTeam}
+
+Also given these stats for the away team:
+{awayTeam}
+
+What is your analysis and which team do you think will come out at the victors of a game when they go head to head
+"""
+
 def main():
     homeTeam, awayTeam = teams()
     run = stats(homeTeam, awayTeam) #Instantiate stats class
@@ -88,35 +122,28 @@ def main():
     found = False
 
     while not found:
+        homeStats = ""
+        awayStats = ""
 
         if run.teamFound(homeTeam) and run.teamFound(awayTeam):
-            os.system('clear')
-            for i in range(len(teamObjects) -1):
-                if homeTeam.upper() == teamObjects[i].getName().upper():
-                    print("--------------Home Team--------------")
-                    print(f"Team: {teamObjects[i].getName()}")
-                    print(f"Position: {teamObjects[i].getPosition()}")
-                    print(f"Games played: {teamObjects[i].getGamesPlayed()}")
-                    print(f"Games won: {teamObjects[i].getGamesWon()}")
-                    print(f"Games lost: {teamObjects[i].getLoses()}")
-                    print(f"Draws: {teamObjects[i].getDraws()}")
-                    print("\n")
-                elif awayTeam.upper() == teamObjects[i].getName().upper():
-                    print("--------------Away Team----------")
-                    print(f"Team: {teamObjects[i].getName()}")
-                    print(f"Position: {teamObjects[i].getPosition()}")
-                    print(f"Games played: {teamObjects[i].getGamesPlayed()}")
-                    print(f"Games won: {teamObjects[i].getGamesWon()}")
-                    print(f"Games lost: {teamObjects[i].getLoses()}")
-                    print(f"Draws: {teamObjects[i].getDraws()}")
 
+            for i in range(len(teamsList)-1):
+                if teamsList[i][0].upper() == homeTeam.upper():
+                    homeStats = generateStats(teamsList[i])
+                
+                elif teamsList[i][0].upper() == homeTeam.upper():
+                    generateStats = generateStats(teamsList[i])
+                                
+            print(prediction.ask(aiPrompt(homeStats, awayStats)))
             found = True
+
         else:
             os.system('clear')
             print("Please enter correct team names...")
             homeTeam, awayTeam = teams()
 
 
-main()
 # scraper.getHTML("https://www.rotowire.com/soccer/league-table.php")
 
+if __name__ == "__main__":
+    main()
