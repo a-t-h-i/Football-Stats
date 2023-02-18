@@ -1,6 +1,7 @@
 import openai
-
-openai.api_key = "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"
+import os
+#You can get your open ai api key here: https://platform.openai.com/account/api-keys
+openai.api_key = "<API-KEY>"
 
 def ask(query):
     
