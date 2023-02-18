@@ -52,7 +52,7 @@ class stats(object):
         return pd.read_csv(file, header = 1)
    
     def mapTeams(self):
-        for i in range(self.rows-1):
+        for i in range(self.rows):
             self.teams.append(self.df.loc[i, :].values.flatten().tolist()) #Append to list of teams
         
 
@@ -75,37 +75,36 @@ def teams():
     return (home, away)
 
 def generateStats(data):
-    name = data[0].getName()
-    position = data[0].getPosition()
-    played = data[0].getGamesPlayed()
-    won = data[0].getGamesWon()
-    loses = data[0].getLoses()
-    draws = data[0].getDraws()
-    goals = data[0].getGoals()
-    conceded = data[0].getGoalsConceded()
+    name = data.getName()
+    position = data.getPosition()
+    played = data.getGamesPlayed()
+    won = data.getGamesWon()
+    loses = data.getLoses()
+    draws = data.getDraws()
+    goals = data.getGoals()
+    conceded = data.getGoalsConceded()
 
     return f"""
     Team name: {name}
     Position: {position}
     Games Played: {played}
     Games Won: {won}
-    Games Lost: {lost}
+    Games Lost: {loses}
     Draws: {draws}
     Goals Scored: {goals}
     Goals Conceded: {conceded}
     """
 
 def aiPrompt(homeTeam, awayTeam):
-
     return f"""
-Asume the role of a soccer commentator.
+Asume the rolse of a sports analyst and give me analytical information.
 Given these stats for the home team:
 {homeTeam}
 
 Also given these stats for the away team:
 {awayTeam}
 
-What is your analysis and which team do you think will come out at the victors of a game when they go head to head
+Give me an in depth analysis, which team do you think will win, will both teams score and number of goals
 """
 
 def main():
@@ -124,16 +123,21 @@ def main():
     while not found:
         homeStats = ""
         awayStats = ""
-
+        
         if run.teamFound(homeTeam) and run.teamFound(awayTeam):
+            os.system('clear')
 
-            for i in range(len(teamsList)-1):
-                if teamsList[i][0].upper() == homeTeam.upper():
-                    homeStats = generateStats(teamsList[i])
+            for i in range(len(teamObjects)):
+                if teamObjects[i].getName().upper() == homeTeam.upper():
+                    homeStats = generateStats(teamObjects[i])
                 
-                elif teamsList[i][0].upper() == homeTeam.upper():
-                    generateStats = generateStats(teamsList[i])
+                elif teamObjects[i].getName().upper() == awayTeam.upper():
+                    awayStats = generateStats(teamObjects[i])
                                 
+            print("Home team Stats\n" + homeStats)
+            print("-----------------------------")
+            print("Away team stats\n" + awayStats)
+            print("-----------------------------")
             print(prediction.ask(aiPrompt(homeStats, awayStats)))
             found = True
 
