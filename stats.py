@@ -196,9 +196,9 @@ Given these stats for the home team:
 Also given these stats for the away team:
 {awayTeam}
 
-Give me an in depth analysis using Poisson Distribution, regression and elo rating.
+Give me a concise analysis using Poisson Distribution, regression and elo rating.
 Tell me which team do you think will win.
-Give me the likelihood of a drar in %?
+Give me the likelihood of a draw in %?
 Likelihood of both teams scoring in %?
 By the end of the game what is the expected number of goals?
 While analysing take into account which team is playing home 
