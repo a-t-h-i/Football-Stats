@@ -11,5 +11,5 @@ def losePercentage(gamesPlayed, gamesLost):
     return round(result, 2)
 
 def drawPercentage(gamesPlayed, draws):
-    result = (draws/gamesPlayed)
+    result = (draws/gamesPlayed)*100
     return round(result,2)
