@@ -1,20 +1,18 @@
 from ai import prediction
-import csv
-import os
-import glob
-import pandas as pd
+from calc import calculate
+import os, glob, pandas as pd
+
 os.system('clear')
 
 class team(object):
-    def __init__(self, name, data):
-        self.name = name
+    def __init__(self, data):
         self.data = data
 
     def getPosition(self):
         return self.data[1]
 
     def getName(self):
-        return self.name
+        return self.data[0]
 
     def getGamesPlayed(self):
         return self.data[3]
@@ -33,6 +31,42 @@ class team(object):
 
     def getGoalsConceded(self):
         return self.data[8]
+
+    def getAwayGoals(self):
+        return self.data[25]
+
+    def getAwayConceded(self):
+        return self.data[26]
+
+    def getAwayMatches(self):
+        return self.data[21]
+
+    def getAwayLoses(self):
+        return self.data[24]
+
+    def getAwayDraws(self):
+        return self.data[23]
+
+    def getAwayWins(self):
+        return self.data[22]
+
+    def getHomeGoals(self):
+        return self.data[16]
+
+    def getHomeConceded(self):
+        return self.data[17]
+    
+    def getHomeMatches(self):
+        return self.data[12]
+    
+    def getHomeWins(self):
+        return self.data[13]
+
+    def getHomeDraws(self):
+        return self.data[14]
+
+    def getHomeLoses(self):
+        return self.data[15]
 
 
 class stats(object):
@@ -69,6 +103,50 @@ class stats(object):
 
 
 
+def calcOverallPerformance(team):
+    matchesPlayed = team.getGamesPlayed()
+    goalsScored = team.getGoals()
+    matchesWon = team.getGamesWon()
+    loses = team.getLoses()
+    draws = team.getDraws()
+
+    winPerc = calculate.winPercentage(matchesPlayed, matchesWon)
+    losePerc = calculate.losePercentage(matchesPlayed, loses)
+    drawPerc = calculate.drawPercentage(matchesPlayed, draws)
+    goalsPerGame = calculate.averageGoals(goalsScored, matchesPlayed)
+    
+    return (winPerc, losePerc, drawPerc, goalsPerGame)
+
+
+def calcHomePerformance(team):
+    matchesPlayed = team.getHomeMatches()
+    goalsScored = team.getHomeGoals()
+    matchesWon = team.getHomeWins()
+    loses = team.getHomeLoses()
+    draws = team.getHomeDraws()
+
+    winPerc = calculate.winPercentage(matchesPlayed, matchesWon)
+    losePerc = calculate.losePercentage(matchesPlayed, loses)
+    drawPerc = calculate.drawPercentage(matchesPlayed, draws)
+    goalsPerGame = calculate.averageGoals(goalsScored, matchesPlayed)
+
+    return (winPerc, losePerc, drawPerc, goalsPerGame)
+    
+
+def calcAwayPerformance(team):
+    matchesPlayed = team.getAwayMatches()
+    goalsScored = team.getAwayGoals()
+    matchesWon = team.getAwayWins()
+    loses = team.getAwayLoses()
+    draws = team.getAwayDraws()
+
+    winPerc = calculate.winPercentage(matchesPlayed, matchesWon)
+    losePerc = calculate.losePercentage(matchesPlayed, loses)
+    drawPerc = calculate.drawPercentage(matchesPlayed, draws)
+    goalsPerGame = calculate.averageGoals(goalsScored, matchesPlayed)
+
+    return (winPerc, losePerc, drawPerc, goalsPerGame)
+
 def teams():
     home = input("Home team: ")
     away = input("Away team: ")
@@ -82,6 +160,9 @@ def generateStats(data):
     loses = data.getLoses()
     draws = data.getDraws()
     goals = data.getGoals()
+    performance = calcOverallPerformance(data)
+    homePerf = calcHomePerformance(data)
+    awayPerf = calcAwayPerformance(data)
     conceded = data.getGoalsConceded()
 
     return f"""
@@ -93,18 +174,33 @@ def generateStats(data):
     Draws: {draws}
     Goals Scored: {goals}
     Goals Conceded: {conceded}
+    
+    Average Goals Per Game: {performance[3]}
+    Overall Win Percentage: {performance[0]}
+    
+    Home win percentage: {homePerf[0]}
+    Home lose percentage: {homePerf[1]}
+    Home draw percentage: {homePerf[2]}
+    
+    Away win percentage: {awayPerf[0]}
+    Away lose percentagee: {awayPerf[1]}
+    Away draw percentage: {awayPerf[2]}
     """
 
 def aiPrompt(homeTeam, awayTeam):
     return f"""
-Asume the rolse of a sports analyst and give me analytical information.
+Assume the role of a sports analyst and give me analytical information.
 Given these stats for the home team:
 {homeTeam}
 
 Also given these stats for the away team:
 {awayTeam}
 
-Give me an in depth analysis, which team do you think will win, will both teams score and number of goals
+Give me an in depth analysis using Poisson Distribution, regression and elo rating.
+Tell me which team do you think will win.
+What is the likelihood of a draw?
+Do you think both teams will score?
+By the end of the game what is the expected number of goals?
 """
 
 def main():
@@ -116,7 +212,7 @@ def main():
 
     #Add teams to list of objects
     for i in range(len(teamsList)-1):
-        teamObjects.append(team(teamsList[i][0], teamsList[i]))
+        teamObjects.append(team(teamsList[i]))
 
     found = False
 
