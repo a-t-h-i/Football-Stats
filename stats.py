@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 from ai import prediction
 from calc import calculate
 import os, glob, pandas as pd
@@ -176,32 +177,33 @@ def generateStats(data):
     Goals Conceded: {conceded}
     
     Average Goals Per Game: {performance[3]}
-    Overall Win Percentage: {performance[0]}
+    Overall Win Percentage: {performance[0]}%
     
-    Home win percentage: {homePerf[0]}
-    Home lose percentage: {homePerf[1]}
-    Home draw percentage: {homePerf[2]}
+    Home wins: {homePerf[0]}%
+    Home loses: {homePerf[1]}%
+    Home draws: {homePerf[2]}%
     
-    Away win percentage: {awayPerf[0]}
-    Away lose percentagee: {awayPerf[1]}
-    Away draw percentage: {awayPerf[2]}
+    Away wins: {awayPerf[0]}%
+    Away loses: {awayPerf[1]}%
+    Away draws: {awayPerf[2]}%
     """
 
 def aiPrompt(homeTeam, awayTeam):
     return f"""
 Assume the role of a sports analyst and give me analytical information.
+
 Given these stats for the home team:
 {homeTeam}
 
 Also given these stats for the away team:
 {awayTeam}
 
-Give me a concise analysis using Poisson Distribution, regression and elo rating.
-Tell me which team do you think will win.
+Take into account which team is playing home and what is their home win %
+Analyse the stats using poisson distribution, regression and elo rating.
+Which team do you suggest will win?
 Give me the likelihood of a draw in %?
 Likelihood of both teams scoring in %?
-By the end of the game what is the expected number of goals?
-While analysing take into account which team is playing home 
+What's the expected number of goals?
 """
 
 def main():
