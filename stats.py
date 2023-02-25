@@ -198,8 +198,7 @@ Given these stats for the home team:
 Also given these stats for the away team:
 {awayTeam}
 
-Take into account which team is playing home and what is their home win %
-Analyse the stats using poisson distribution, regression and elo rating.
+Analyse give me an accurate and in depth analysis of these stats.
 Which team do you suggest will win?
 Give me the likelihood of a draw in %?
 Likelihood of both teams scoring in %?
@@ -214,7 +213,7 @@ def main():
     teamObjects = []
 
     #Add teams to list of objects
-    for i in range(len(teamsList)-1):
+    for i in range(len(teamsList)):
         teamObjects.append(team(teamsList[i]))
 
     found = False
