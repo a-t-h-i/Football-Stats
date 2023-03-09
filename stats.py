@@ -6,6 +6,9 @@ import os, glob, json, pandas as pd
 os.system('clear')
 
 def toJson(data):
+    #Another way I can approach this is if I loop throught the data list and then
+    #add the items I'm iterating to the json object
+
     result = {"Name":data[0], 
               "Position":data[1],
               "Played":data[3],
@@ -20,16 +23,24 @@ def toJson(data):
               "Away Wins":data[22],
               "Away Lost":data[24],
               "Away Draws":data[23],
-              "Home Played":data[],
+              "Home Played":data[12],
               "Home Goals":data[16],
               "Home Conceded":data[17],
               "Home Wins":data[13],
               "Home Loses":data[15],
               "Home Draws":data[14],
-              "Average Goals":"Calculate Avg goals",
-              "Win Percentage":"Calculate Win Percentage",
-              "Lose Percentage":"calculate Lose Percentage",
-              "Draw Percentage":"Calculate Draw Percentage"}
+              "Average Goals":calculate.averageGoals(data[7], data[3]),
+              "Win Percentage":calculate.winPercentage(data[7], data[4]),
+              "Lose Percentage":calculate.losePercentage(data[7], data[6]),
+              "Draw Percentage":calculate.drawPercentage(data[7], data[5]),
+              "Average Home Goals":calculate.averageGoals(data[16],data[12]),
+              "Home Win Percentage":calculate.winPercentage(data[12],data[13]),
+              "Home Draws Percentage":calculate.drawPercentage(data[12],data[14]),
+              "Home Lose Percentage":calculate.losePercentage(data[12], data[15]),
+              "Average Away Goals":calculate.averageGoals(data[25], data[21]),
+              "Away Win Percentage":calculate.winPercentage(data[21], data[22]),
+              "Away Lose Percentage":calculate.losePercentage(data[21], data[24]),
+              "Away Draw Percentage":calculate.drawPercentage(data[21], data[23])}
     return result
 
 
@@ -66,99 +77,43 @@ class stats(object):
         return self.teams
 
 
-
-def calcOverallPerformance(team):
-    matchesPlayed = team.getGamesPlayed()
-    goalsScored = team.getGoals()
-    matchesWon = team.getGamesWon()
-    loses = team.getLoses()
-    draws = team.getDraws()
-
-    winPerc = calculate.winPercentage(matchesPlayed, matchesWon)
-    losePerc = calculate.losePercentage(matchesPlayed, loses)
-    drawPerc = calculate.drawPercentage(matchesPlayed, draws)
-    goalsPerGame = calculate.averageGoals(goalsScored, matchesPlayed)
-    
-    return (winPerc, losePerc, drawPerc, goalsPerGame)
-
-
-def calcHomePerformance(team):
-    matchesPlayed = team.getHomeMatches()
-    goalsScored = team.getHomeGoals()
-    matchesWon = team.getHomeWins()
-    loses = team.getHomeLoses()
-    draws = team.getHomeDraws()
-
-    winPerc = calculate.winPercentage(matchesPlayed, matchesWon)
-    losePerc = calculate.losePercentage(matchesPlayed, loses)
-    drawPerc = calculate.drawPercentage(matchesPlayed, draws)
-    goalsPerGame = calculate.averageGoals(goalsScored, matchesPlayed)
-
-    return (winPerc, losePerc, drawPerc, goalsPerGame)
-    
-
-def calcAwayPerformance(team):
-    matchesPlayed = team.getAwayMatches()
-    goalsScored = team.getAwayGoals()
-    matchesWon = team.getAwayWins()
-    loses = team.getAwayLoses()
-    draws = team.getAwayDraws()
-
-    winPerc = calculate.winPercentage(matchesPlayed, matchesWon)
-    losePerc = calculate.losePercentage(matchesPlayed, loses)
-    drawPerc = calculate.drawPercentage(matchesPlayed, draws)
-    goalsPerGame = calculate.averageGoals(goalsScored, matchesPlayed)
-
-    return (winPerc, losePerc, drawPerc, goalsPerGame)
-
 def teams():
     home = input("Home team: ")
     away = input("Away team: ")
     return (home, away)
 
 def generateStats(data):
-    name = data.getName()
-    position = data.getPosition()
-    played = data.getGamesPlayed()
-    won = data.getGamesWon()
-    loses = data.getLoses()
-    draws = data.getDraws()
-    goals = data.getGoals()
-    performance = calcOverallPerformance(data)
-    homePerf = calcHomePerformance(data)
-    awayPerf = calcAwayPerformance(data)
-    conceded = data.getGoalsConceded()
 
     return f"""
-    Team name: {name}
-    Position: {position}
-    Games Played: {played}
-    Games Won: {won}
-    Games Lost: {loses}
-    Draws: {draws}
-    Goals Scored: {goals}
-    Goals Conceded: {conceded}
+    Team name: {data["Team Name"]}
+    Position: {data["Position"]}
+    Games Played: {data["Games Played"]}
+    Games Won: {data["Games Won"]}
+    Games Lost: {data["Games Lost"]}
+    Draws: {data["Draws"]}
+    Goals Scored: {data["Goals Scored"]}
+    Goals Conceded: {data["Goals Conceded"]}
     
-    Average Goals Per Game: {performance[3]}
-    Overall Win Percentage: {performance[0]}%
+    Average Goals Per Game: {data["Average Goals"]}
+    Overall Win Percentage: {data["Win Percentage"]}%
     
-    Home wins: {homePerf[0]}%
-    Home loses: {homePerf[1]}%
-    Home draws: {homePerf[2]}%
+    Home wins: {data["Home Wins"]}%
+    Home loses: {data["Home Loses"]}%
+    Home draws: {data["Home Draws"]}%
     
-    Away wins: {awayPerf[0]}%
-    Away loses: {awayPerf[1]}%
-    Away draws: {awayPerf[2]}%
+    Away wins: {data["Away Wins"]}%
+    Away loses: {data["Away Loses"]}%
+    Away draws: {data["Away Draws"]}%
     """
 
 def aiPrompt(homeTeam, awayTeam):
     return f"""
 You are a sports analyst. Take into account the stats of two soccer teams below.
 
-These are the stats for the team that will be playing on home ground:
+These are the stats in JSON format for the team that will be playing on home ground:
 {homeTeam}
 
-These are the stats for the away team:
+These are the stats in JSON format for the away team:
 {awayTeam}
 
 Analyse them and give me an accurate, useful and in depth information that I can use for betting.
@@ -173,12 +128,12 @@ def main():
     homeTeam, awayTeam = teams()
     run = stats(homeTeam, awayTeam) #Instantiate stats class
     run.mapTeams() #Save list of teams from CSV file
-    teamsList= run.getTeams()
-    teamObjects = []
+    teamsList= run.getTeams() #Get list of teams
+    jsonList = [] #List of json objects
 
-    #Add teams to list of objects
-    for i in range(len(teamsList)):
-        teamObjects.append(team(teamsList[i]))
+    #Create json object and save to list of json objects
+    for team in teamsList:
+        jsonList.append(toJson(team))
 
     found = False
 
@@ -189,12 +144,13 @@ def main():
         if run.teamFound(homeTeam) and run.teamFound(awayTeam):
             os.system('clear')
 
-            for i in range(len(teamObjects)):
-                if teamObjects[i].getName().upper() == homeTeam.upper():
-                    homeStats = generateStats(teamObjects[i])
+            for object in jsonList:
+
+                if str(object.get("Team Name")).upper() == homeTeam.upper():
+                    homeStats = str(object)
                 
-                elif teamObjects[i].getName().upper() == awayTeam.upper():
-                    awayStats = generateStats(teamObjects[i])
+                elif str(object.get("Team Name")).upper() == awayTeam.upper():
+                    awayStats = str(object)
                                 
             print("Home team Stats\n" + homeStats)
             print("-----------------------------")
