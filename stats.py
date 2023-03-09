@@ -129,10 +129,8 @@ def main():
                 elif str(object["Name"]).upper() == awayTeam.upper():
                     awayStats = str(object)
                                 
-            print("Home team Stats\n" + homeStats)
-            print("-----------------------------")
-            print("Away team stats\n" + awayStats)
-            print("-----------------------------")
+            print(f"{prediction.ask('Show me this data in an organised and easy to read format' + homeStats)}")
+            print(f"{prediction.ask('Show me this data in an organised and easy to read format' + awayStats)}")
             print(prediction.ask(aiPrompt(homeStats, awayStats)))
             found = True
 
