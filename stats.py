@@ -1,73 +1,36 @@
 #!/usr/bin/python3
 from ai import prediction
 from calc import calculate
-import os, glob, pandas as pd
+import os, glob, json, pandas as pd
 
 os.system('clear')
 
-class team(object):
-    def __init__(self, data):
-        self.data = data
-
-    def getPosition(self):
-        return self.data[1]
-
-    def getName(self):
-        return self.data[0]
-
-    def getGamesPlayed(self):
-        return self.data[3]
-    
-    def getGamesWon(self):
-        return self.data[4]
-    
-    def getLoses(self):
-        return self.data[6]
-
-    def getDraws(self):
-        return self.data[5]
-
-    def getGoals(self):
-        return self.data[7]
-
-    def getGoalsConceded(self):
-        return self.data[8]
-
-    def getAwayGoals(self):
-        return self.data[25]
-
-    def getAwayConceded(self):
-        return self.data[26]
-
-    def getAwayMatches(self):
-        return self.data[21]
-
-    def getAwayLoses(self):
-        return self.data[24]
-
-    def getAwayDraws(self):
-        return self.data[23]
-
-    def getAwayWins(self):
-        return self.data[22]
-
-    def getHomeGoals(self):
-        return self.data[16]
-
-    def getHomeConceded(self):
-        return self.data[17]
-    
-    def getHomeMatches(self):
-        return self.data[12]
-    
-    def getHomeWins(self):
-        return self.data[13]
-
-    def getHomeDraws(self):
-        return self.data[14]
-
-    def getHomeLoses(self):
-        return self.data[15]
+def toJson(data):
+    result = {"Name":data[0], 
+              "Position":data[1],
+              "Played":data[3],
+              "Won":data[4],
+              "Lost":data[6],
+              "Draws":data[5],
+              "Goals":data[7],
+              "Conceded":data[8],
+              "Away Played":data[21],
+              "Away Goals":data[25],
+              "Away Conceded":data[26],
+              "Away Wins":data[22],
+              "Away Lost":data[24],
+              "Away Draws":data[23],
+              "Home Played":data[],
+              "Home Goals":data[16],
+              "Home Conceded":data[17],
+              "Home Wins":data[13],
+              "Home Loses":data[15],
+              "Home Draws":data[14],
+              "Average Goals":"Calculate Avg goals",
+              "Win Percentage":"Calculate Win Percentage",
+              "Lose Percentage":"calculate Lose Percentage",
+              "Draw Percentage":"Calculate Draw Percentage"}
+    return result
 
 
 class stats(object):
@@ -190,19 +153,20 @@ def generateStats(data):
 
 def aiPrompt(homeTeam, awayTeam):
     return f"""
-Assume the role of a sports analyst and give me analytical information.
+You are a sports analyst. Take into account the stats of two soccer teams below.
 
-Given these stats for the home team:
+These are the stats for the team that will be playing on home ground:
 {homeTeam}
 
-Also given these stats for the away team:
+These are the stats for the away team:
 {awayTeam}
 
-Analyse give me an accurate and in depth analysis of these stats.
-Which team do you suggest will win?
+Analyse them and give me an accurate, useful and in depth information that I can use for betting.
+Use logistic regression, poisson distribution and alto rating to give me answers to the following:
 Give me the likelihood of a draw in %?
 Likelihood of both teams scoring in %?
 What's the expected number of goals?
+Which team do you think will win and why?
 """
 
 def main():
