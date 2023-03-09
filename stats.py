@@ -5,6 +5,18 @@ import os, glob, json, time, pandas as pd
 
 os.system('clear')
 
+def updateData():
+    #This function will update the data sored on the json file
+    return 0
+
+
+def saveToJson(data):
+    #This function will help optimise the program by storing all the data
+    #For all the teams in a json file for quicker access instead of having
+    #to do all the computations everytime the program is run
+    return 0
+
+
 def toJson(data):
     #Another way I can approach this is if I loop throught the data list and then
     #add the items I'm iterating to the json object
