@@ -1,14 +1,13 @@
 #!/usr/bin/python3
 from ai import prediction
 from calc import calculate
-import os, glob, json, pandas as pd
+import os, glob, json, time, pandas as pd
 
 os.system('clear')
 
 def toJson(data):
     #Another way I can approach this is if I loop throught the data list and then
     #add the items I'm iterating to the json object
-
     result = {"Name":data[0], 
               "Position":data[1],
               "Played":data[3],
@@ -41,6 +40,7 @@ def toJson(data):
               "Away Win Percentage":calculate.winPercentage(data[21], data[22]),
               "Away Lose Percentage":calculate.losePercentage(data[21], data[24]),
               "Away Draw Percentage":calculate.drawPercentage(data[21], data[23])}
+    
     return result
 
 
@@ -146,10 +146,10 @@ def main():
 
             for object in jsonList:
 
-                if str(object.get("Team Name")).upper() == homeTeam.upper():
+                if str(object["Name"]).upper() == homeTeam.upper():
                     homeStats = str(object)
                 
-                elif str(object.get("Team Name")).upper() == awayTeam.upper():
+                elif str(object["Name"]).upper() == awayTeam.upper():
                     awayStats = str(object)
                                 
             print("Home team Stats\n" + homeStats)
