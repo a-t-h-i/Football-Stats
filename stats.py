@@ -29,9 +29,9 @@ def toJson(data):
               "Home Loses":data[15],
               "Home Draws":data[14],
               "Average Goals":calculate.averageGoals(data[7], data[3]),
-              "Win Percentage":calculate.winPercentage(data[7], data[4]),
-              "Lose Percentage":calculate.losePercentage(data[7], data[6]),
-              "Draw Percentage":calculate.drawPercentage(data[7], data[5]),
+              "Win Percentage":calculate.winPercentage(data[3], data[4]),
+              "Lose Percentage":calculate.losePercentage(data[3], data[6]),
+              "Draw Percentage":calculate.drawPercentage(data[3], data[5]),
               "Average Home Goals":calculate.averageGoals(data[16],data[12]),
               "Home Win Percentage":calculate.winPercentage(data[12],data[13]),
               "Home Draws Percentage":calculate.drawPercentage(data[12],data[14]),
@@ -82,41 +82,18 @@ def teams():
     away = input("Away team: ")
     return (home, away)
 
-def generateStats(data):
-
-    return f"""
-    Team name: {data["Team Name"]}
-    Position: {data["Position"]}
-    Games Played: {data["Games Played"]}
-    Games Won: {data["Games Won"]}
-    Games Lost: {data["Games Lost"]}
-    Draws: {data["Draws"]}
-    Goals Scored: {data["Goals Scored"]}
-    Goals Conceded: {data["Goals Conceded"]}
-    
-    Average Goals Per Game: {data["Average Goals"]}
-    Overall Win Percentage: {data["Win Percentage"]}%
-    
-    Home wins: {data["Home Wins"]}%
-    Home loses: {data["Home Loses"]}%
-    Home draws: {data["Home Draws"]}%
-    
-    Away wins: {data["Away Wins"]}%
-    Away loses: {data["Away Loses"]}%
-    Away draws: {data["Away Draws"]}%
-    """
-
 def aiPrompt(homeTeam, awayTeam):
     return f"""
 You are a sports analyst. Take into account the stats of two soccer teams below.
 
-These are the stats in JSON format for the team that will be playing on home ground:
+Look at this JSON data and show it in a presentable way:
 {homeTeam}
 
-These are the stats in JSON format for the away team:
+Look at this JSON data and show it in a presentable way also:
 {awayTeam}
 
-Analyse them and give me an accurate, useful and in depth information that I can use for betting.
+
+Now analyse all the data and give me an accurate, useful and in depth information that I can use for betting.
 Use logistic regression, poisson distribution and alto rating to give me answers to the following:
 Give me the likelihood of a draw in %?
 Likelihood of both teams scoring in %?
