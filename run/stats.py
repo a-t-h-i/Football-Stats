@@ -12,7 +12,7 @@ def updateData():
 
 def saveToJson(data):
     #This function will help optimise the program by storing all the data
-    #For all the teams in a json file for quicker access instead of having
+    #for all the teams in a json file for quicker access instead of having
     #to do all the computations everytime the program is run
     return 0
 
