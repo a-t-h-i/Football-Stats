@@ -113,11 +113,17 @@ What's the expected number of goals?
 Which team do you think will win and why?
 """
 
-def main():
-    homeTeam, awayTeam = teams()
+def main(home, away):
+    #If home and away were provided when main was called then use those
+    if (len(home) > 3) and (len(away) > 3):
+        homeTeam, awayTeam = (home,away)
+    else:
+    #Else if they were not provided that means the user is using the cli, so ask them to provide the names
+        homeTeam, awayTeam = teams()
+
     run = stats(homeTeam, awayTeam) #Instantiate stats class
     run.mapTeams() #Save list of teams from CSV file
-    teamsList= run.getTeams() #Get list of teams
+    teamsList = run.getTeams() #Get list of teams
     jsonList = [] #List of json objects
 
     #Create json object and save to list of json objects
@@ -129,7 +135,8 @@ def main():
     while not found:
         homeStats = ""
         awayStats = ""
-        
+        answer = ""
+
         if run.teamFound(homeTeam) and run.teamFound(awayTeam):
             os.system('clear')
 
@@ -141,18 +148,13 @@ def main():
                 elif str(object["Name"]).upper() == awayTeam.upper():
                     awayStats = str(object)
                                 
-            print(f"{prediction.ask('Show me this data in an organised and easy to read format' + homeStats)}")
-            print(f"{prediction.ask('Show me this data in an organised and easy to read format' + awayStats)}")
-            print(prediction.ask(aiPrompt(homeStats, awayStats)))
-            found = True
+            answer = prediction.ask(aiPrompt(homeStats, awayStats))
 
+            return (answer, jsonList)
+            found = True
         else:
             os.system('clear')
             print("Please enter correct team names...")
             homeTeam, awayTeam = teams()
 
-
 # scraper.getHTML("https://www.rotowire.com/soccer/league-table.php")
-
-if __name__ == "__main__":
-    main()
