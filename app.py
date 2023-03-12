@@ -16,15 +16,10 @@ def getNames():
     return names
 
 
-def getStats(team):
-    error = {"Error":"Team not found!"}
-    
-    for team in teamStats:
-            
-        if team["Name"].upper() == team.upper():
-            return team
-    
-    return error 
+def getStats():
+    global teamStats
+
+    return teamStats 
 
 
 def updateData():
@@ -39,6 +34,7 @@ def saveToJson(data):
     return 0
 
 def saveStats(stats):
+    global teamStats
     teamStats = stats
 
 
@@ -80,7 +76,7 @@ def toJson(data):
     return result
 
 
-class stats(object):
+class app(object):
     def __init__(self):
         #self.df = pd.read_csv('csv/soccer-standings.csv', header=1)
         self.csvPath = "csv/"
@@ -131,11 +127,17 @@ def getPrediction(stats):
     return prediction.ask(prompt)
 
 def main():
-    run = stats()
+
+    run = app()
     run.mapTeams() #Save list of teams from CSV file
     teamsList = run.getTeams() #Get list of teams
     jsonList = [] #List of json objects
     #Create json object and save to list of json objects
+    names = []
+    stats = {}
     for team in teamsList:
         jsonList.append(toJson(team))
     saveStats(jsonList)
+    names = getNames()
+    stats = getStats()
+    return (names,stats)
