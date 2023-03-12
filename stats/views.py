@@ -23,9 +23,11 @@ def index_view(request):
     global stats
     context = {}
     names, stats = initialise()
-
+    prediction = ""
     context['names'] = names
     context['home'] = teamStats("Barcelona")
     context['away'] = teamStats("Liverpool")
+    context['prediction'] = app.getPrediction([teamStats("Barcelona"),teamStats("Liverpool")])
+
     #Render takes in 3 parameters: request, html file and the context in {} which helps pass values from things like variables
     return render(request, "stats/home.html", context)
