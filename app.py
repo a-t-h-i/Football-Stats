@@ -5,6 +5,28 @@ import os, glob, json, time, pandas as pd
 
 os.system('clear')
 
+teamStats = []
+
+def getNames():
+    #Gets names of teams and returns the list of names
+    names = []
+    
+    for team in teamStats:
+        names.append(team["Name"])
+    return names
+
+
+def getStats(team):
+    error = {"Error":"Team not found!"}
+    
+    for team in teamStats:
+            
+        if team["Name"].upper() == team.upper():
+            return team
+    
+    return error 
+
+
 def updateData():
     #This function will update the data sored on the json file
     return 0
@@ -15,6 +37,9 @@ def saveToJson(data):
     #for all the teams in a json file for quicker access instead of having
     #to do all the computations everytime the program is run
     return 0
+
+def saveStats(stats):
+    teamStats = stats
 
 
 def toJson(data):
@@ -51,13 +76,12 @@ def toJson(data):
               "Average Away Goals":calculate.averageGoals(data[25], data[21]),
               "Away Win Percentage":calculate.winPercentage(data[21], data[22]),
               "Away Lose Percentage":calculate.losePercentage(data[21], data[24]),
-              "Away Draw Percentage":calculate.drawPercentage(data[21], data[23])}
-    
+              "Away Draw Percentage":calculate.drawPercentage(data[21], data[23])}    
     return result
 
 
 class stats(object):
-    def __init__(self, home, away):
+    def __init__(self):
         #self.df = pd.read_csv('csv/soccer-standings.csv', header=1)
         self.csvPath = "csv/"
         self.csvFiles = glob.glob(self.csvPath + "/*.csv")
@@ -75,24 +99,10 @@ class stats(object):
     def mapTeams(self):
         for i in range(self.rows):
             self.teams.append(self.df.loc[i, :].values.flatten().tolist()) #Append to list of teams
-        
-
-    def teamFound(self,searchValue):
-        for team in self.teams:
-
-            if team[0].upper() == searchValue.upper():
-                return True
-
-        return False
     
     def getTeams(self):
         return self.teams
 
-
-def teams():
-    home = input("Home team: ")
-    away = input("Away team: ")
-    return (home, away)
 
 def aiPrompt(homeTeam, awayTeam):
     return f"""
@@ -105,6 +115,8 @@ Look at this JSON data and show it in a presentable way also:
 {awayTeam}
 
 
+First give me a summary of the stats and compare both teams.
+
 Now analyse all the data and give me an accurate, useful and in depth information that I can use for betting.
 Use logistic regression, poisson distribution and alto rating to give me answers to the following:
 Give me the likelihood of a draw in %?
@@ -113,48 +125,17 @@ What's the expected number of goals?
 Which team do you think will win and why?
 """
 
-def main(home, away):
-    #If home and away were provided when main was called then use those
-    if (len(home) > 3) and (len(away) > 3):
-        homeTeam, awayTeam = (home,away)
-    else:
-    #Else if they were not provided that means the user is using the cli, so ask them to provide the names
-        homeTeam, awayTeam = teams()
+def getPrediction(stats):
+    #Takes in a list that of stats at index 0 is the home team stasts at iindex 1 is the away team statss
+    prompt = aiPrompt(stats[0],stats[1])
+    return prediction.ask(prompt)
 
-    run = stats(homeTeam, awayTeam) #Instantiate stats class
+def main():
+    run = stats()
     run.mapTeams() #Save list of teams from CSV file
     teamsList = run.getTeams() #Get list of teams
     jsonList = [] #List of json objects
-
     #Create json object and save to list of json objects
     for team in teamsList:
         jsonList.append(toJson(team))
-
-    found = False
-
-    while not found:
-        homeStats = ""
-        awayStats = ""
-        answer = ""
-
-        if run.teamFound(homeTeam) and run.teamFound(awayTeam):
-            os.system('clear')
-
-            for object in jsonList:
-
-                if str(object["Name"]).upper() == homeTeam.upper():
-                    homeStats = str(object)
-                
-                elif str(object["Name"]).upper() == awayTeam.upper():
-                    awayStats = str(object)
-                                
-            answer = prediction.ask(aiPrompt(homeStats, awayStats))
-
-            return (answer, jsonList)
-            found = True
-        else:
-            os.system('clear')
-            print("Please enter correct team names...")
-            homeTeam, awayTeam = teams()
-
-# scraper.getHTML("https://www.rotowire.com/soccer/league-table.php")
+    saveStats(jsonList)
