@@ -1,13 +1,57 @@
 {% extends 'index.html' %}
 
 {% block content %}
-<div id="body">
-<h3>Home Stats:</h3>
-  <p>{{home}}</p>
-  <h3>Away Stats:</h3>
-  <p>{{away}}</p>
-  <h3>AI Prediction:</h3>
-  <p>{{prediction}}</p>
-</div>
+
+  <form method="post">
+    {% csrf_token %} <!-- add this for security -->
+    <table>
+      <tr>
+
+        <td>
+          <select name="home_team">
+            <option value="" disabled selected>Select Team</option>
+            {% for name in names %}                                                          
+              <option value="{{ name }}">{{ name }}</option>
+            {% endfor %}
+          </select>
+        </td>
+
+        <td><h4>VS</h4></td>
+
+        <td>
+          <select name="away_team">
+            <option value="" disabled selected>Select Team</option>
+            {% for name in names %}
+              <option value="{{ name }}">{{ name }}</option>
+            {% endfor %}
+          </select>
+        </td>
+
+        <td><button type="submit">Compare</button></td>
+
+      </tr>
+
+      {% if home and away %}
+      <tr>
+        <td><p>{{home}}</p></td>
+        <td></td>
+        <td><p>{{away}}</p></td>
+        <td></td>
+      </tr>
+      {% endif %}
+
+      {% if prediction %}
+      <tr>
+        <td colspan="4"><h4>AI Prediction</h4></td>
+      </tr>
+
+      <tr>
+        <td colspan="4">{{prediction}}</td>
+      </tr>
+      {% endif %}
+
+    </table>
+  </form>
+
 {% endblock content %}
 

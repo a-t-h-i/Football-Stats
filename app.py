@@ -13,6 +13,7 @@ def getNames():
     
     for team in teamStats:
         names.append(team["Name"])
+    names.sort()
     return names
 
 
