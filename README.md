@@ -4,10 +4,10 @@
 To run the app you need to first install the dependencies on your python environment</p>
 
 First clone the project by running: 
-`git clone ----`
+`git clone git@github.com:a-t-h-i/Football-Stats.git`
 
 Then cd to the cloned project by running: 
-`cd ---`
+`cd Football-Stats`
 
 This assumes you already have python installed. Run this command to install the dependencies:
 `pip install -r requirements.txt`
