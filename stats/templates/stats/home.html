@@ -1,7 +1,7 @@
 {% extends 'index.html' %}
 
 {% block content %}
-
+  <p>Select a home team and away team then press on compare to get a comparison of their stats.</p>
   <form method="post">
     {% csrf_token %} <!-- add this for security -->
     <table>
@@ -9,18 +9,18 @@
 
         <td>
           <select name="home_team">
-            <option value="" disabled selected>Select Team</option>
+            <option value="" selected>Select Team</option>
             {% for name in names %}                                                          
               <option value="{{ name }}">{{ name }}</option>
             {% endfor %}
           </select>
         </td>
 
-        <td><h4>VS</h4></td>
+        <td><h4> vs </h4></td>
 
         <td>
           <select name="away_team">
-            <option value="" disabled selected>Select Team</option>
+            <option value="" selected>Select Team</option>
             {% for name in names %}
               <option value="{{ name }}">{{ name }}</option>
             {% endfor %}
