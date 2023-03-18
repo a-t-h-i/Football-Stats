@@ -2,7 +2,7 @@ from django.shortcuts import render
 import app
 
 stats = []
-
+copy = []
 def initialise():
     return app.main()
     
@@ -14,7 +14,7 @@ def teamStats(search):
         
         if team["Name"].upper() == search.upper():
             return team
-    return {"Error":"Team not found"}
+    return {"Error":f"{search} not found"}
 
 
 def index_view(request):
@@ -28,18 +28,22 @@ def index_view(request):
     return render(request, "stats/home.html", context)
 
 
-def stats_view(request):
-    homeTeam  = ""
-    awayTeam = ""
+def compare_view(request):
+    global copy
+    index_view(request)
+    homeTeam  = request.POST.get("home_team")
+    awayTeam = request.POST.get("away_team")
     context = {}
+    copy = []
+    copy.append(homeTeam)
+    copy.append(awayTeam)
     context['home'] = teamStats(homeTeam)
     context['away'] = teamStats(awayTeam)
     return render(request, "stats/home.html", context)
 
 
-def prediction_view(request):
-    homeTeam = ""
-    awayTeam = ""
+def predict_view(request):
+    global copy
     context = {}
-    context['ai'] = app.getPrediction([teamStats(homeTeam), teamStats(awayTeam)])
+    context['prediction'] = app.getPrediction(copy)
     return render(request, "stats/home.html", context)

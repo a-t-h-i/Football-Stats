@@ -103,19 +103,18 @@ class app(object):
 
 def aiPrompt(homeTeam, awayTeam):
     return f"""
-You are a sports analyst. Take into account the stats of two soccer teams below.
+You are a sports analyst. Take into account the stats of two soccer teams below, They are in the JSON format.
 
-Look at this JSON data and show it in a presentable way:
+Home Team:
 {homeTeam}
 
-Look at this JSON data and show it in a presentable way also:
+Away Team:
 {awayTeam}
 
 
-First give me a summary of the stats and compare both teams.
+Show me the provided stats in a user friendly way.
 
-Now analyse all the data and give me an accurate, useful and in depth information that I can use for betting.
-Use logistic regression, poisson distribution and alto rating to give me answers to the following:
+Also, based on the provided stats:
 Give me the likelihood of a draw in %?
 Likelihood of both teams scoring in %?
 What's the expected number of goals?

@@ -1,12 +1,10 @@
 {% extends 'index.html' %}
 
 {% block content %}
-  <p>Select a home team and away team then press on compare to get a comparison of their stats.</p>
-  <form method="post">
+  <form method="post" action="/compare/">
     {% csrf_token %} <!-- add this for security -->
     <table>
       <tr>
-
         <td>
           <select name="home_team">
             <option value="" selected>Select Team</option>
@@ -30,7 +28,10 @@
         <td><button type="submit">Compare</button></td>
 
       </tr>
+    </table>
+  </form>
 
+  <table>
       {% if home and away %}
       <tr>
         <td><p>{{home}}</p></td>
@@ -39,7 +40,12 @@
         <td></td>
       </tr>
       {% endif %}
+  </table>
 
+  <form method="post" action="/predict/">
+    {% csrf_token %}
+    <button id="predict">AI Prediction</button>
+    <table>
       {% if prediction %}
       <tr>
         <td colspan="4"><h4>AI Prediction:</h4></td>
@@ -48,9 +54,7 @@
         <td colspan="4">{{prediction}}</td>
       </tr>
       {% endif %}
-
     </table>
   </form>
-
 {% endblock content %}
 

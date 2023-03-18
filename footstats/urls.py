@@ -16,8 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from stats.views import index_view
+from stats.views import predict_view
+from stats.views import compare_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index_view),
+    path('compare/', compare_view),
+    path('predict/', predict_view),
 ]
