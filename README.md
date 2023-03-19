@@ -2,17 +2,12 @@
 <h2>Football Stats</h2>
 <p>Football stats is a tool that allows you to compare the performance of two football teams.
 
-First clone the project by running: 
-`git clone git@github.com:a-t-h-i/Football-Stats.git`
+First clone the project by running: `git clone git@github.com:a-t-h-i/Football-Stats.git`
 
-Then cd to the cloned project by running: 
-`cd Football-Stats`
+Then cd to the cloned project by running: `cd Football-Stats`
 
-This assumes you already have python installed. Run this command to install the dependencies:
-`pip install -r requirements.txt`
+This assumes you already have python installed. Run this command to install the dependencies:`pip install -r requirements.txt`
 
-After installing the dependencies, you can run this app using: 
-`python3 manage.py`
+After installing the dependencies, you can run this app using: `python3 manage.py runserver`
 
-Open your browser and goto:
-`127.0.0.1:8000`
+Open your browser and goto:`127.0.0.1:8000`
