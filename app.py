@@ -6,7 +6,7 @@ import os, glob, json, time, updater, pandas as pd
 os.system('clear')
 
 teamStats = []
-updater.update()
+#updater.update()
 
 def getNames():
     #Gets names of teams and returns the list of names
