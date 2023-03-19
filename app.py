@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 from ai import prediction
 from calc import calculate
-import os, glob, json, time, updater, pandas as pd
+import os, glob, json, time, pandas as pd
 
 os.system('clear')
 
