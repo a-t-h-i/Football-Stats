@@ -1,11 +1,12 @@
 #!/usr/bin/python3
 from ai import prediction
 from calc import calculate
-import os, glob, json, time, pandas as pd
+import os, glob, json, time, updater, pandas as pd
 
 os.system('clear')
 
 teamStats = []
+updater.update()
 
 def getNames():
     #Gets names of teams and returns the list of names
