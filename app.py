@@ -1,12 +1,11 @@
 #!/usr/bin/python3
 from ai import prediction
 from calc import calculate
-import os, glob, json, time, pandas as pd
-
-os.system('clear')
+from dbox import drop
+import os, glob, drop, json, time, pandas as pd
 
 teamStats = []
-#updater.update()
+
 
 def getNames():
     #Gets names of teams and returns the list of names
@@ -128,6 +127,8 @@ def getPrediction(stats):
     return prediction.ask(prompt)
 
 def main():
+    #First check data
+    drop.check()
 
     run = app()
     run.mapTeams() #Save list of teams from CSV file
