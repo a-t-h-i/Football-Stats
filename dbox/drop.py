@@ -5,12 +5,19 @@ import os, datetime, dropbox
 
 token = os.environ.get("D_BOX")
 
+def check_folder(path):
+    if not os.path.exists(path):
+        os.makedirs(path)
+
 def has_latest_data():
     
     folder_path = "csv"
 
+
     today = datetime.date.today()
     latest = True
+
+    check_folder(folder_path)
     
     #Check if folder empty
     if (os.listdir(folder_path)) == []:
@@ -37,8 +44,7 @@ def update():
     local_folder = "csv"
     dbx = dropbox.Dropbox(token)
 
-    if not os.path.exists(local_folder):
-        os.makedirs(local_folder)
+    check_folder(local_folder)
 
     # List files in dropbox folder
     dropbox_folder = '/csv'
