@@ -2,7 +2,7 @@
 from ai import prediction
 from calc import calculate
 from dbox import drop
-import os, glob, drop, json, time, pandas as pd
+import os, glob, json, time, pandas as pd
 
 teamStats = []
 
