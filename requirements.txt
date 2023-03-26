@@ -9,7 +9,7 @@ Django
 frozenlist==1.3.3
 idna==3.4
 multidict==6.0.4
-numpy==1.24.2
+numpy
 openai==0.27.2
 pandas==1.5.3
 python-dateutil==2.8.2
