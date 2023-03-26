@@ -1,0 +1,14 @@
+services: 
+- type: web
+  name: football-stats
+  env: python
+  buildCommand: "./build.sh"        # ensure it's a string
+  startCommand: python3 manage.py startserver
+  repo: https://github.com/a-t-h-i/football-stats.git # optional
+  # plan: standard # optional
+  healthCheckPath: /
+  autoDeploy: true             # optional
+  envVars:
+  - key: DJANGO_SECRET_KEY
+    generateValue: true       # will generate a base64-encoded 256-bit secret
+
