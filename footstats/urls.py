@@ -14,6 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from djangocontrib.staticfiles.urls import staticfiles_urlpatterns
 from django.urls import path
 from stats.views import index_view
 from stats.views import predict_view
@@ -25,3 +26,6 @@ urlpatterns = [
     path('compare/', compare_view),
     path('predict/', predict_view),
 ]
+
+urlpatterns += staticfiles_urlpatterns()
+
