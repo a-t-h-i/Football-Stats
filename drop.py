@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import os
-import datetime
+import os, datetime, dropbox
+
+token = os.environ.get("D_BOX")
 
 folder_path = "csv"
 
@@ -32,11 +33,28 @@ def has_latest_data():
     return latest
 
 def update():
-    return 0
-    #Gets latest files from dropbox
+    dbx = dropbox.Dropbox(token)
+
+    # Set up local folder to save CSV files
+    local_folder = 'csv'
+    if not os.path.exists(local_folder):
+        os.makedirs(local_folder)
+
+    # Get list of files in Dropbox folder
+    dropbox_folder = '/csv'
+    files = dbx.files_list_folder(dropbox_folder).entries
+
+    # Download each CSV file and save it to local folder
+    for file in files:
+        if isinstance(file, dropbox.files.FileMetadata) and file.name.endswith('.csv'):
+            dropbox_path = f'{dropbox_folder}/{file.name}'
+            local_path = f'{local_folder}/{file.name}'
+            with open(local_path, 'wb') as f:
+                metadata, res = dbx.files_download(dropbox_path)
+                f.write(res.content)
+
 
 def check():
-    print(has_latest_data())
     if not has_latest_data():
         update()
 
