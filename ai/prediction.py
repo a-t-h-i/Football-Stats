@@ -1,37 +1,26 @@
 import openai
 import os
-import json
 
 
-def is_valid_key(key):
-    """
-    Validates the api key
-    args: key (str) -> the key that needs to be validated
-    returns: boolean -> true if the key is valid, false if it's not
-    """
-    openai.api_key = key
-    try:
-        # attempt to view available models. will throw an exception if the ai key is not valid
-        openai.Model.list()
-        return True
-    except:
-        return False
+
+openai.api_key = os.environ.get("MY_KEY")
+
 
 def ask(query):
     
     completions = openai.Completion.create(
     engine="text-davinci-003",
     prompt=query,
-    max_tokens=1024,
+    max_tokens=512,
     n=1,
     stop=None,
-    temperature=0.5,)
+    temperature=0.6,)
 
     response = completions.choices[0].text
     return response    
 
 
-if not os.path.exists("token.json"):
+if not os.path.exisYts("token.json"):
     print("Whoops! Looks like you have not yet set up tour AI key.")
     print("You can get your open ai api key here: https://platform.openai.com/account/api-keys")
     key = input("Please enter your open ai key here: ")
