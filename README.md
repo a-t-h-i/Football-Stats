@@ -11,7 +11,7 @@ First clone the project by running: `git clone git@github.com:a-t-h-i/Football-S
 
 Then cd to the cloned project by running: `cd Football-Stats`
 
-You will have to create a virtual environment so that you don't install dependencies system wide. You don't need to create it but you definetly would want to if you don't want to install useless pip libraries on your system 😄. To create a virtual env run the following command:`python -m venv env`
+You will have to create a virtual environment so that you don't install dependencies system wide. You don't need to create it but you definetly would want to if you don't want to install useless Python libraries on your system 😄. To create a virtual env run the following command:`python -m venv env`
 
 Run this to activate the virtual env:`source env/bin/activate`
 
