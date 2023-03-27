@@ -64,9 +64,9 @@ def update():
 def get_token():
     #Automatically get a short lived access token
     url = "https://api.dropbox.com/oauth2/token"
-    refresh_token = os.eviron.get("REFRESH_TOKEN")
-    client_id = os.environ.get("CLIENT_ID")
-    client_secret = os.environ.get("CLIENT_SECRET")
+    refresh_token = os.getenv("REFRESH_TOKEN")
+    client_id = os.getenv("CLIENT_ID")
+    client_secret = os.getenv("CLIENT_SECRET")
     grant_type = "refresh_token"
 
     data = {
@@ -81,5 +81,5 @@ def get_token():
     return str(response.json()['access_token'])
     
 def check():
-  if not has_latest_data:
+  if not has_latest_data():
     update()
