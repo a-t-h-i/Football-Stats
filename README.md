@@ -17,6 +17,6 @@ Run this to activate the virtual env:`source env/bin/activate`
 
 Run this command to install the dependencies:`pip install -r requirements.txt`
 
-After installing the dependencies, you can run this app using: `python3 manage.py runserver`
+After installing the dependencies, you can run this app using: `gunicorn footstats.wsgi:application`
 
 Open your browser and goto:`127.0.0.1:8000`
