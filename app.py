@@ -103,22 +103,19 @@ class app(object):
 
 def aiPrompt(homeTeam, awayTeam):
     return f"""
-You are a sports analyst. Take into account the stats of two soccer teams below, They are in the JSON format.
+Assume the role of a sports analyst. Look at the following JSON data of two soccer teams going head to head:
 
-Home Team:
 {homeTeam}
 
-Away Team:
 {awayTeam}
 
+After looking at the data do the following:
+1) Provide an in depth commentary on the data (Please only talk about provided data, don't make up your own stats).
+2) What is your estimated number of goals and why?
+3) Do you think both teams will score? (Motivate your answer)
+4) Who will be the winner of the match? (Motivate your answer)
 
-Show me the provided stats in a user friendly way.
-
-Also, based on the provided stats:
-Give me the likelihood of a draw in %?
-Likelihood of both teams scoring in %?
-What's the expected number of goals?
-Which team do you think will win and why?
+Mention at the end that you are just a language model and your predictions should be used for entertainment purposes only.
 """
 
 def getPrediction(stats):

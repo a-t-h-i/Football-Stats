@@ -22,5 +22,4 @@ urllib3
 yarl
 dj-database-url
 gunicorn
-psycopg2
 dropbox
