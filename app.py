@@ -80,7 +80,7 @@ def toJson(data):
 class app(object):
     def __init__(self):
         #self.df = pd.read_csv('csv/soccer-standings.csv', header=1)
-        self.csvPath = "drop/csv/"
+        self.csvPath = "csv"
         self.csvFiles = glob.glob(self.csvPath + "/*.csv")
         self.dfList = []
         
