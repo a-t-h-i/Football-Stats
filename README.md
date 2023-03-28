@@ -4,7 +4,7 @@ https://football-stats-rkzp.onrender.com/
 <p>Football stats is a tool that allows you to compare the performance of two football teams.
 This is achieved by reading stats of top European leagues from a CSV file. The tool then
 calculates and displays the statistics of the selected teams in a user friendly way. 
-I try to update the stats daily by automatically downloading the latest stats from a deignated Dropbox folder.
+I try to update the stats daily by automatically downloading the latest stats from a designated Dropbox folder.
 </p>
 
 First clone the project by running: `git clone git@github.com:a-t-h-i/Football-Stats.git`
