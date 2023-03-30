@@ -1,8 +1,10 @@
 from django.shortcuts import render
 import app
 
-stats = []
-copy = []
+home_stats = ''
+away_stats = ''
+names = ''
+
 def initialise():
     return app.main()
     
@@ -18,7 +20,7 @@ def teamStats(search):
 
 
 def index_view(request):
-    global stats
+    global stats, names
     context = {}
     names, stats = initialise()
     prediction = ""
@@ -29,21 +31,21 @@ def index_view(request):
 
 
 def compare_view(request):
-    global copy
-    index_view(request)
-    homeTeam  = request.POST.get("home_team")
-    awayTeam = request.POST.get("away_team")
-    context = {}
-    copy = []
-    copy.append(homeTeam)
-    copy.append(awayTeam)
-    context['home'] = teamStats(homeTeam)
-    context['away'] = teamStats(awayTeam)
+    global copy, home_stats, away_stats
+
+    home_stats = teamStats(request.POST.get("home_team"))
+    away_stats = teamStats(request.POST.get("away_team"))
+    context={}
+    context['names'] = names
+    context['home'] = home_stats
+    context['away'] = away_stats
     return render(request, "stats/home.html", context)
 
 
 def predict_view(request):
-    global copy
     context = {}
-    context['prediction'] = app.getPrediction(copy)
+    context['names'] = names
+    context['home'] = home_stats
+    context['away'] = away_stats
+    context['prediction'] = app.getPrediction((home_stats, away_stats))
     return render(request, "stats/home.html", context)

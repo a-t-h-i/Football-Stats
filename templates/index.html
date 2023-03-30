@@ -3,8 +3,11 @@
 <html>
   <head>
     <link rel="stylesheet" type="text/css" href="{% static 'footstats/css/style.css' %}">
-    <h4>Football Stats</h4>
-    <p>Select two teams to compare their performance</p>
+    <h4 id="logo">Football Stats</h4>
+    {% if not home and not away %}
+    <p class="description">This app allows you to compare the performance of two football teams.</p>
+    <p>Please make a selection below and press the compare button</p>
+    {% endif %}
   </head>
 
   <body>

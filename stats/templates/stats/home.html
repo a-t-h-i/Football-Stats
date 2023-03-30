@@ -31,10 +31,10 @@
     </table>
   </form>
 
-  <table>
+  <table id="compare_stats">
       {% if home and away %}
       <tr>
-        <td><p id="stats">{{home}}</p></td>
+        <td><p id="stats" onload="focus_stats()">{{home}}</p></td>
         <td></td>
         <td><p id="stats">{{away}}</p></td>
         <td></td>
@@ -42,10 +42,12 @@
       {% endif %}
   </table>
 
-  <form method="post" action="/predict/">
+
+  {% if home and away %}
+  <form  method="post" action="/predict/">
     {% csrf_token %}
-    <button id="predict">AI Prediction</button>
-    <table>
+    <button id="predict" onclick="focus_prediction()">AI Prediction</button>
+    <table id="prediction">
       {% if prediction %}
       <tr>
         <td colspan="4"><h4>AI Prediction:</h4></td>
@@ -56,5 +58,21 @@
       {% endif %}
     </table>
   </form>
+  {% endif %}
+
+  <script> 
+  
+    const stats = document.getElementById("compare_stats");
+    const prediction = document.getElementById("prediction");
+    
+    function focus_stats(){
+      stats.focus()
+    }
+
+    function focus_prediction(){
+      prediction.focus()
+    }
+
+  </script>
 {% endblock content %}
 

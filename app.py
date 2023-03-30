@@ -109,13 +109,14 @@ Assume the role of a sports analyst. Look at the following JSON data of two socc
 
 {awayTeam}
 
-After looking at the data do the following:
-1) Provide an in depth commentary on the data (Please only talk about provided data, don't make up your own stats).
+After looking at the data do the following (Use only the data I provided you for the below actions):
+1) Provide an in depth, creative and informative commentary on the data.
 2) What is your estimated number of goals and why?
 3) Do you think both teams will score? (Motivate your answer)
-4) Who will be the winner of the match? (Motivate your answer)
+4) What are the chances of a draw?
+5) Who will be the winner of the match? (Motivate your answer)
 
-Mention at the end that you are just a language model and your predictions should be used for entertainment purposes only.
+At the end of your response say the following exactly as it is: "The above predictions are that of a language model. Be advised not to make financial decisions based on them."
 """
 
 def getPrediction(stats):
