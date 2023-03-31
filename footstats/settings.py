@@ -71,6 +71,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'footstats.wsgi.application'
+CHART_JS = 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.2.1/chart.min.js'
 
 
 # Database

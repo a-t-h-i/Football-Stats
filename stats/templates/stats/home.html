@@ -34,9 +34,15 @@
   <table id="compare_stats">
       {% if home and away %}
       <tr>
-        <td><p id="stats" onload="focus_stats()">{{home}}</p></td>
+        <td>
+          <p id="stats" onload="focus_stats()">{{home}}</p>
+          <canvas id="homeChart"> </canvas>
+        </td>
         <td></td>
-        <td><p id="stats">{{away}}</p></td>
+        <td>
+          <p id="stats">{{away}}</p>
+          <canvas id="awayChart"> </canvas>
+        </td>
         <td></td>
       </tr>
       {% endif %}
@@ -60,17 +66,40 @@
   </form>
   {% endif %}
 
-  <script> 
-  
+  <script>
+    
+    //Charts
+    const ctx = document.getElementById('homeChart');
+
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        datasets: [{
+          label: '# of Votes',
+          data: [12, 19, 3, 5, 2, 3],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+
+    //Focus
     const stats = document.getElementById("compare_stats");
     const prediction = document.getElementById("prediction");
     
     function focus_stats(){
-      stats.focus()
+      stats.focus();
     }
 
     function focus_prediction(){
-      prediction.focus()
+      prediction.focus();
     }
 
   </script>

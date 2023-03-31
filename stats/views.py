@@ -47,5 +47,5 @@ def predict_view(request):
     context['names'] = names
     context['home'] = home_stats
     context['away'] = away_stats
-    context['prediction'] = app.getPrediction((home_stats, away_stats))
+    context['prediction'] = app.getPrediction(home_stats, away_stats)
     return render(request, "stats/home.html", context)

@@ -119,9 +119,9 @@ After looking at the data do the following (Use only the data I provided you for
 At the end of your response say the following exactly as it is: "The above predictions are that of a language model. Be advised not to make financial decisions based on them."
 """
 
-def getPrediction(stats):
+def getPrediction(home, away):
     #Takes in a list that of stats at index 0 is the home team stasts at iindex 1 is the away team statss
-    prompt = aiPrompt(stats[0],stats[1])
+    prompt = aiPrompt(home, away)
     return prediction.ask(prompt)
 
 def main():
