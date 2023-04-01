@@ -5,6 +5,7 @@ stats = ''
 home_stats = ''
 away_stats = ''
 names = ''
+stats = ''
 
 def initialise():
     return app.main()
