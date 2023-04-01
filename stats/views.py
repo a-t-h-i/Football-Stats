@@ -1,6 +1,7 @@
 from django.shortcuts import render
 import app
 
+stats = ''
 home_stats = ''
 away_stats = ''
 names = ''
