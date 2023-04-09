@@ -21,11 +21,10 @@ from stats.views import predict_view
 from stats.views import compare_view
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', index_view),
-    path('compare/', compare_view),
-    path('predict/', predict_view),
+    path("admin/", admin.site.urls),
+    path("", index_view),
+    path("compare/", compare_view),
+    path("predict/", predict_view),
 ]
 
 urlpatterns += staticfiles_urlpatterns()
-

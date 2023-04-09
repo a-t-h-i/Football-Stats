@@ -8,6 +8,7 @@ import requests
 
 import os, datetime, dropbox, requests
 
+
 def check_folder(path):
     if not os.path.exists(path):
         os.makedirs(path)
@@ -20,14 +21,13 @@ def has_latest_data():
 
     check_folder(folder_path)
 
-    #Check if folder empty
+    # Check if folder empty
     if (os.listdir(folder_path)) == []:
         return False
 
     # Loop through each CSV file in the folder
     for filename in os.listdir(folder_path):
         if filename.endswith(".csv"):
-
             # Get the date the file was last modified
             file_path = os.path.join(folder_path, filename)
             modification_time = os.path.getmtime(file_path)
@@ -48,21 +48,21 @@ def update():
     check_folder(local_folder)
 
     # List files in dropbox folder
-    dropbox_folder = '/csv'
+    dropbox_folder = "/csv"
     files = dbx.files_list_folder(dropbox_folder).entries
 
-    #Download csv files to local folder
+    # Download csv files to local folder
     for file in files:
-        if isinstance(file, dropbox.files.FileMetadata) and file.name.endswith('.csv'):
-            dropbox_path = f'{dropbox_folder}/{file.name}'
-            file_it = f'{local_folder}/{file.name}'
-            with open(file_it, 'wb') as f:
+        if isinstance(file, dropbox.files.FileMetadata) and file.name.endswith(".csv"):
+            dropbox_path = f"{dropbox_folder}/{file.name}"
+            file_it = f"{local_folder}/{file.name}"
+            with open(file_it, "wb") as f:
                 metadata, res = dbx.files_download(dropbox_path)
                 f.write(res.content)
 
 
 def get_token():
-    #Automatically get a short lived access token
+    # Automatically get a short lived access token
     url = "https://api.dropbox.com/oauth2/token"
     refresh_token = os.getenv("REFRESH_TOKEN")
     client_id = os.getenv("CLIENT_ID")
@@ -73,13 +73,14 @@ def get_token():
         "refresh_token": refresh_token,
         "grant_type": grant_type,
         "client_id": client_id,
-        "client_secret": client_secret
+        "client_secret": client_secret,
     }
 
     response = requests.post(url, data=data)
 
-    return str(response.json()['access_token'])
-    
+    return str(response.json()["access_token"])
+
+
 def check():
-  if not has_latest_data():
-    update()
+    if not has_latest_data():
+        update()
