@@ -1,11 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
-import requests
-
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
 import os, datetime, dropbox, requests
 
 
