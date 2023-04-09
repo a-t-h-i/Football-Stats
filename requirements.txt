@@ -5,4 +5,4 @@ requests
 dj-database-url
 gunicorn
 dropbox
-psycopg2
+psycopg2-binary 
