@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <script src="{% static CHART_JS %}"></script>
+    <script src="{% static 'footstats/script/main.js' %}"></script>
     <link rel="stylesheet" type="text/css" href="{% static 'footstats/css/style.css' %}">
     <h4 id="logo">Football Stats</h4>
     {% if not home and not away %}
@@ -18,6 +18,5 @@
     {% endblock content %}
 
   </body>
-
   <footer><h6 id="copyright">© Football Stats 2023</h6></footer>
 </html>

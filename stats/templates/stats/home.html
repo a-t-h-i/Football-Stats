@@ -1,6 +1,7 @@
 
 {% extends 'index.html' %}
 {% block content %}
+<div id="main">
   <form method="post" action="/compare/">
     {% csrf_token %} <!-- add this for security -->
     <table>
@@ -65,43 +66,6 @@
     </table>
   </form>
   {% endif %}
-
-  <script>
-    
-    //Charts
-    const ctx = document.getElementById('homeChart');
-
-    new Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-        datasets: [{
-          label: '# of Votes',
-          data: [12, 19, 3, 5, 2, 3],
-          borderWidth: 1
-        }]
-      },
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true
-          }
-        }
-      }
-    });
-
-    //Focus
-    const stats = document.getElementById("compare_stats");
-    const prediction = document.getElementById("prediction");
-    
-    function focus_stats(){
-      stats.focus();
-    }
-
-    function focus_prediction(){
-      prediction.focus();
-    }
-
-  </script>
+</div>
 {% endblock content %}
 
