@@ -41,42 +41,42 @@ def saveStats(stats):
 
 
 def toJson(data):
-    # Another way I can approach this is if I loop throught the data list and then
-    # add the items I'm iterating to the json object
+
     result = {
         "Name": data[0],
-        "Position": data[1],
-        "Played": data[3],
-        "Won": data[4],
-        "Lost": data[6],
-        "Draws": data[5],
-        "Goals": data[7],
-        "Conceded": data[8],
-        "Away Played": data[21],
-        "Away Goals": data[25],
-        "Away Conceded": data[26],
-        "Away Wins": data[22],
-        "Away Lost": data[24],
-        "Away Draws": data[23],
-        "Home Played": data[12],
-        "Home Goals": data[16],
-        "Home Conceded": data[17],
-        "Home Wins": data[13],
-        "Home Loses": data[15],
-        "Home Draws": data[14],
-        "Average Goals": calculate.averageGoals(data[7], data[3]),
-        "Win Percentage": calculate.winPercentage(data[3], data[4]),
-        "Lose Percentage": calculate.losePercentage(data[3], data[6]),
-        "Draw Percentage": calculate.drawPercentage(data[3], data[5]),
-        "Average Home Goals": calculate.averageGoals(data[16], data[12]),
-        "Home Win Percentage": calculate.winPercentage(data[12], data[13]),
-        "Home Draws Percentage": calculate.drawPercentage(data[12], data[14]),
-        "Home Lose Percentage": calculate.losePercentage(data[12], data[15]),
-        "Average Away Goals": calculate.averageGoals(data[25], data[21]),
-        "Away Win Percentage": calculate.winPercentage(data[21], data[22]),
-        "Away Lose Percentage": calculate.losePercentage(data[21], data[24]),
-        "Away Draw Percentage": calculate.drawPercentage(data[21], data[23]),
+        "Position": int(data[1]),
+        "Played": int(data[3]),
+        "Won": int(data[4]),
+        "Lost": int(data[6]),
+        "Draws": int(data[5]),
+        "Goals": int(data[7]),
+        "Conceded": int(data[8]),
+        "Away Played": int(data[21]),
+        "Away Goals": int(data[25]),
+        "Away Conceded": int(data[26]),
+        "Away Wins": int(data[22]),
+        "Away Lost": int(data[24]),
+        "Away Draws": int(data[23]),
+        "Home Played": int(data[12]),
+        "Home Goals": int(data[16]),
+        "Home Conceded": int(data[17]),
+        "Home Wins": int(data[13]),
+        "Home Loses": int(data[15]),
+        "Home Draws": int(data[14]),
+        "Average Goals": float(calculate.averageGoals(data[7], data[3])),
+        "Win Percentage": float(calculate.winPercentage(data[3], data[4])),
+        "Lose Percentage": float(calculate.losePercentage(data[3], data[6])),
+        "Draw Percentage": float(calculate.drawPercentage(data[3], data[5])),
+        "Average Home Goals": float(calculate.averageGoals(data[16], data[12])),
+        "Home Win Percentage": float(calculate.winPercentage(data[12], data[13])),
+        "Home Draws Percentage": float(calculate.drawPercentage(data[12], data[14])),
+        "Home Lose Percentage": float(calculate.losePercentage(data[12], data[15])),
+        "Average Away Goals": float(calculate.averageGoals(data[25], data[21])),
+        "Away Win Percentage": float(calculate.winPercentage(data[21], data[22])),
+        "Away Lose Percentage": float(calculate.losePercentage(data[21], data[24])),
+        "Away Draw Percentage": float(calculate.drawPercentage(data[21], data[23])),
     }
+    
     return result
 
 
@@ -115,13 +115,13 @@ Assume the role of a sports analyst. Look at the following JSON data of two socc
 {awayTeam}
 
 After looking at the data do the following (Use only the data I provided you for the below actions):
-1) Provide an in depth, creative and informative commentary on the data.
-2) What is your estimated number of goals and why?
-3) Do you think both teams will score? (Motivate your answer)
+1) Provide a paragraph of an in depth, creative and informative comparison of the provided data.
+2) Is it likely that both teams will score?
+3) What are the chances of a draw happening?
 4) What are the chances of a draw?
-5) Who will be the winner of the match? (Motivate your answer)
+5) Who do you suggest will win the match? (Do factor in home ground advantage)
 
-At the end of your response say the following exactly as it is: "The above predictions are that of a language model. Be advised not to make financial decisions based on them."
+At the end of your response say the following exactly as it is: "The above predictions are that of a language model and should be used for entertainment purposes only. Be advised not to make financial decisions based on them."
 """
 
 

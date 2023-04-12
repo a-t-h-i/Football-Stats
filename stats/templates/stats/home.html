@@ -2,13 +2,22 @@
 {% extends 'index.html' %}
 {% block content %}
 <div id="main">
-  <form method="post" action="/compare/">
+  <p>{{error}}</p>
+  <form id="teamSelection" method="post" action="/compare/" onsubmit="return checkSelect()">
     {% csrf_token %} <!-- add this for security -->
     <table>
       <tr>
         <td>
           <select name="home_team">
+            
+            {% if selected_home %}
+            <option value="{{selected_home}}" selected>{{selected_home}}</option>
+            {% endif %}
+
+            {% if not selected_home %}
             <option value="" selected>Select Team</option>
+            {% endif %}
+            
             {% for name in names %}                                                          
               <option value="{{ name }}">{{ name }}</option>
             {% endfor %}
@@ -19,14 +28,21 @@
 
         <td>
           <select name="away_team">
-            <option value="" selected>Select Team</option>
+            {% if selected_away%}
+            <option value="{{selected_away}}" selected>{{selected_away}}</option>
+            {% endif %}
+            
+            {% if not selected_away %}
+            <option value"" selected>Select Team</option>
+            {% endif %}
+
             {% for name in names %}
               <option value="{{ name }}">{{ name }}</option>
             {% endfor %}
           </select>
         </td>
 
-        <td><button type="submit">Compare</button></td>
+        <td><button type="submit" onclick="homePie([10,30,60])">Compare</button></td>
 
       </tr>
     </table>
@@ -34,15 +50,16 @@
 
   <table id="compare_stats">
       {% if home and away %}
+      <p>{{home.Goals}}</p>
       <tr>
         <td>
-          <p id="stats" onload="focus_stats()">{{home}}</p>
-          <canvas id="homeChart"> </canvas>
+          <canvas id="homePie"></canvas>
+          <canvas id="homeGraph"></canvas>
         </td>
         <td></td>
         <td>
-          <p id="stats">{{away}}</p>
-          <canvas id="awayChart"> </canvas>
+          <canvas id="awayPie"> </canvas>
+          <canvas id="awayGraph"> </canvas>
         </td>
         <td></td>
       </tr>
@@ -53,12 +70,9 @@
   {% if home and away %}
   <form  method="post" action="/predict/">
     {% csrf_token %}
-    <button id="predict" onclick="focus_prediction()">AI Prediction</button>
+    <button id="predict" onclick="focus_prediction()">Get Analysis</button>
     <table id="prediction">
       {% if prediction %}
-      <tr>
-        <td colspan="4"><h4>AI Prediction:</h4></td>
-      </tr>
       <tr>
         <td colspan="4">{{prediction}}</td>
       </tr>

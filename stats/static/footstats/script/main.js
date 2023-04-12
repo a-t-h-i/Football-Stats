@@ -2,9 +2,13 @@ const script = document.createElement('script');
 script.src = 'https://cdn.jsdelivr.net/npm/chart.js';
 document.head.appendChild(script);
 
+let home; 
+let away;
 
-var stats = document.getElementById("compare_stats");
-var prediction = document.getElementById("prediction");
+function getStats(home, away){
+  home, away = [JSON.parse(home), JSON.parse(away)]
+  loadGraps();
+}
 
 
 function focus_stats(){
@@ -17,10 +21,30 @@ function focus_prediction(){
   prediction.focus();
 }
 
-function loadGraps(data){
-  homePie([12,3,4]);
-  homeGraph([2,4,5]);
+function loadGraps(){
+  var homePie = [];
+  var homeGraph = [];
+  var awayPie = [];
+  var awayGraph = [];
+
+  homePie.push(home["Win Percentage"]);
+  homePie.push(home["Draw Percentage"]);
+  homePie.push(home["Lose Percentage"]);
+
+  homeGraph.push(home["Goals"]);
+  homeGraph.push(home["Conceded"]);
+
+  awayPie.push(away["Win Percentage"]);
+  awayPie.push(away["Draw Percentage"]);
+  awayPie.push(away["Lose Percentage"]);
+
+  awayGraph.push(away["Goals"]);
+  awayGraph.push(away["Conceded"]);
+
+  homePie(homePie);
+  homeGraph(homeGraph);
 }
+
 //Pie
 function homePie(x){
   const ctx = document.getElementById('homePie');
