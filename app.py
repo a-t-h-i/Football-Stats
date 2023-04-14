@@ -112,7 +112,3 @@ class app(object):
 
     def get_prediction(self, home, away):
         return prediction.ask(self._ai_prompt(home, away))
-    
-a = app("testing")
-
-print(a.get_prediction(a.get_stats()[0], a.get_stats()[4]))
