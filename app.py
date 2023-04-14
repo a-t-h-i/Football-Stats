@@ -1,25 +1,26 @@
 #!/usr/bin/python3
 from ai import prediction
 from calc import calculate
-from dbox import drop
 import glob, json, pandas as pd
 
 
 class app(object):
-    def __init__(self):
+    
+    def __init__(self, id):
+        self.object_id = id
         self.csv_path = "csv"
         self.csv_files = glob.glob(self.csv_path + "/*.csv")
-        self.dfList = []
-
-        [self.dfList.append(self._read_file(file)) for file in self.csv_files]
-
-        self.df = pd.concat(self.dfList, ignore_index=True)
-        self.rows, self.columns = self.df.shape  # Get number of rows and columns
+        self.df_list = []
+        [self.df_list.append(self._read_file(file)) for file in self.csv_files]
+        self.df = pd.concat(self.df_list, ignore_index=True)
+        self.rows, self.columns = self.df.shape
         self.teams = self._create_teams_list()
         self.team_stats = self._create_stats()
-
+    
+    
     def _read_file(self, file):
         return pd.read_csv(file, header=1)
+
 
     def _create_teams_list(self):
         result = []
@@ -27,11 +28,13 @@ class app(object):
             result.append(self.df.loc[i, :].values.flatten().tolist())
         return result
 
+
     def get_names(self):
         names = []
         [names.append(team["Name"]) for team in self.team_stats]
         names.sort()
         return names
+
 
     def _to_json(self, data):
         statistics = {
@@ -68,14 +71,18 @@ class app(object):
             "Away Lose Percentage": calculate.lose_percentage(data[21], data[24]),
             "Away Draw Percentage": calculate.draw_percentage(data[21], data[23]),
         }
-        return json.dumps(statistics)
+        return statistics
+
 
     def _create_stats(self):
         stats_list = []
         [stats_list.append(self._to_json(team)) for team in self.teams]
+        return stats_list
+    
+    
+    def get_stats(self):
+        return self.team_stats
 
-    def get_stats(self, home_team, away_team):
-        return ""
 
     def _ai_prompt(self, home_team, away_team):
         return f"""
@@ -97,29 +104,6 @@ class app(object):
     them."
     """
 
+
     def get_prediction(self, home, away):
-        # Takes in a list that of stats at index 0 is the home team stasts at iindex 1 is the away team statss
         return prediction.ask(self._ai_prompt(home, away))
-
-
-# def main():
-#     # First check data
-#     drop.check()
-
-#     run = app()
-#     run._create_teams_list()  # Save list of teams from CSV file
-#     teams_list = run.get_teams_list()  # Get list of teams
-#     json_list = []  # List of json objects
-#     # Create json object and save to list of json objects
-#     names = []
-#     stats = {}
-
-#     # for team in teams_list:
-#     #     json_list.append(_to_json(team))
-
-#     [json_list.append(_to_json(team)) for team in teams_list]
-
-#     save_stats(json_list)
-#     names = get_names()
-#     stats = get_stats()
-#     return (names, stats)
