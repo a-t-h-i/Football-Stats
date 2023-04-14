@@ -3,6 +3,8 @@ from ai import prediction
 from calc import calculate
 import glob, pandas as pd
 
+from dbox import drop
+
 
 class app(object):
     
@@ -104,6 +106,7 @@ class app(object):
     What is the home team's win percentage in the current season? Please provide a clear and concise answer.
     Based on your analysis, what is the likelihood of both teams scoring and the likelihood of a draw? Please provide a clear and concise answer.
     Based on your analysis, what is the expected number of goals? Please provide a clear and concise answer.
+    Based on your analysis, which team has a better chance of winning?
     
     Finally, please include the following statement at the end of your response exactly as it is: "The above predictions are that of a language 
     model and should be used for entertainment purposes only. Be advised not to make financial decisions based on them."
