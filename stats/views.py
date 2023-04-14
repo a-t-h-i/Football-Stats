@@ -18,12 +18,12 @@ def team_stats(search):
     for team in stats:
         if team["Name"] == search:
             return team
-    return "Error"
+    return {"Error", f"Could not find {search}"}
 
 
 def index_view(request):
     global stats, names, home_stats, away_stats
-    home_stats, away_stats = "","" #Reset stats
+    home_stats, away_stats = "", ""  # Reset stats
     context = {}
     names, stats = initialise()
     prediction = ""
@@ -43,15 +43,14 @@ def compare_view(request):
         context["names"] = names
         return render(request, "stats/home.html", context)
 
-
-    if not isinstance(home_stats, dict)  or (not isinstance(away_stats, dict)):
+    if not isinstance(home_stats, dict) or (not isinstance(away_stats, dict)):
         home_stats = team_stats(home)
         away_stats = team_stats(away)
 
     elif (home_stats["Name"] != home) or (away_stats["Name"] != away):
         home_stats = team_stats(home)
         away_stats = team_stats(away)
-    
+
     context["selected_home"] = home
     context["selected_away"] = away
     context["names"] = names
@@ -62,8 +61,8 @@ def compare_view(request):
 
 def predict_view(request):
     context = {}
-    context['names'] = names
-    context['home'] = json.dumps(home_stats)
-    context['away'] = json.dumps(away_stats)
-    context['prediction'] = app.getPrediction(home_stats, away_stats)
+    context["names"] = names
+    context["home"] = json.dumps(home_stats)
+    context["away"] = json.dumps(away_stats)
+    context["prediction"] = app.get_prediction(home_stats, away_stats)
     return render(request, "stats/home.html", context)

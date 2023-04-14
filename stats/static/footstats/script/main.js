@@ -11,12 +11,12 @@ function getStats(home, away){
 }
 
 
-function focus_stats(){
+function focuStats(){
   console.log("I have been called up. Yay!");
   stats.focus();
 }
 
-function focus_prediction(){
+function focusPrediction(){
   console.log("I have also been called up. Yay ^_^");
   prediction.focus();
 }
