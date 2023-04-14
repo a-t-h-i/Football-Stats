@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 from ai import prediction
 from calc import calculate
-import glob, json, pandas as pd
+import glob, pandas as pd
 
 
 class app(object):
