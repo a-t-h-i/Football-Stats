@@ -86,24 +86,33 @@ class app(object):
 
     def _ai_prompt(self, home_team, away_team):
         return f"""
-    Assume the role of a sports analyst. Look at the following JSON data of two soccer teams going head to head:
+    Assuming the role of a sports analyst, you are provided with data on the performance of two soccer teams, in the current season. The data includes the following variables:
 
+    Home Team:
     {home_team}
 
+    Away Team:
     {away_team}
+    
+    Using only the data provided, please do the following:
 
-    After looking at the data do the following (Use only the data I provided you for the below actions):
-    1) Provide a paragraph of an in depth, creative and informative comparison of the provided data.
-    2) Is it likely that both teams will score?
-    3) What are the chances of a draw happening?
-    4) What are the chances of a draw?
-    5) Who do you suggest will win the match? (Do factor in home ground advantage)
-
-    At the end of your response say the following exactly as it is: "The above predictions are that of a language
-    model and should be used for entertainment purposes only. Be advised not to make financial decisions based on
-    them."
+    Write a paragraph that provides an in-depth analysis of both team's performance in the current season. Please compare their position 
+    in the league, number of games played, wins, losses, draws, goals scored, goals conceded, and their form at home and away. Use your knowledge 
+    of soccer to provide insights and predictions for their future performance.
+    What is the win percentage in the current season for both the teams? Please provide a clear and concise answer.
+    What is the average goals per game in the current season for both teams? Please provide a clear and concise answer.
+    What is the home team's win percentage in the current season? Please provide a clear and concise answer.
+    Based on your analysis, what is the likelihood of both teams scoring and the likelihood of a draw? Please provide a clear and concise answer.
+    Based on your analysis, what is the expected number of goals? Please provide a clear and concise answer.
+    
+    Finally, please include the following statement at the end of your response exactly as it is: "The above predictions are that of a language 
+    model and should be used for entertainment purposes only. Be advised not to make financial decisions based on them."
     """
 
 
     def get_prediction(self, home, away):
         return prediction.ask(self._ai_prompt(home, away))
+    
+a = app("testing")
+
+print(a.get_prediction(a.get_stats()[0], a.get_stats()[4]))

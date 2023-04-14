@@ -1,12 +1,10 @@
 from django.shortcuts import render
 import app, json
 
-stats = ""
-home_stats = ""
-away_stats = ""
-names = ""
-stats = ""
-
+class user(object):
+    
+    def __init__():
+        
 
 def initialise():
     return app.main()
@@ -26,7 +24,6 @@ def index_view(request):
     home_stats, away_stats = "", ""  # Reset stats
     context = {}
     names, stats = initialise()
-    prediction = ""
     context["names"] = names
     return render(request, "stats/home.html", context)
 
