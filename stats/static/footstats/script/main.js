@@ -16,7 +16,7 @@ function displayStats(){
   const selectAway = form.querySelector("select[name='awayTeam']");
   const selectedAwayOption = selectAway.options[selectAway.selectedIndex];
   const awayTeam = selectedAwayOption.text;
-
+  let stats = "";
 
   if (homeTeam === "Select Team" || awayTeam === "Select Team"){
     return 0;
@@ -39,13 +39,20 @@ function displayStats(){
   xhr.onload = function() {
       if (xhr.status === 200) {
           const response = JSON.parse(xhr.responseText);
-          console.log(response);
-      } else {
-          console.log('Request failed.  Returned status of ' + xhr.status);
+          populateDom(response);
       }
   };
   xhr.send(JSON.stringify(data));
+  
 }
+
+function populateDom(stats){
+  let homeData = JSON.parse(stats).Home;
+  let awayData = JSON.parse(stats).Away;
+
+  console.log(homeData);
+  console.log(awayData);
+}     
 
 function getCookie(name) {
   let cookieValue = null;
