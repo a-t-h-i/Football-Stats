@@ -14,8 +14,8 @@ function displayStats(){
 
 
   //Get name of selected away team
-  const selectAway = document.querySelector("select[name='homeTeam']");
-  const selectedAwayIndex = selectHome.selectedIndex;
+  const selectAway = document.querySelector("select[name='awayTeam']");
+  const selectedAwayIndex = selectAway.selectedIndex;
   const selectedAwayOption = selectAway.options[selectedAwayIndex];
   const awayTeam = selectedAwayOption.text;
 
@@ -131,9 +131,9 @@ function showHomePie(x){
 }
 
 
-function showHomeGraph(x){
+function showHomeGraph(y){
   const ctx = document.getElementById('homeGraph');
-  let stats = x;
+  let stats = y;
 
   new Chart(ctx, {
     type: 'bar',
@@ -156,9 +156,9 @@ function showHomeGraph(x){
 }
 
 //Away
-function showAwayPie(x){
+function showAwayPie(y){
   const ctx = document.getElementById('awayPie');
-  let stats = x;
+  let stats = y;
 
   new Chart(ctx, {
     type: 'doughnut',
