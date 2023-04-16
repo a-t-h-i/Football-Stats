@@ -44,6 +44,7 @@ class app(object):
         statistics = {
             'Name': data[0],
             'Position': int(data[1]),
+            'Points': int(data[2]),
             'Played': int(data[3]),
             'Won': int(data[4]),
             'Lost': int(data[6]),

@@ -38,7 +38,7 @@ def compare_view(request):
     object.set_away_stats(team_stats(body.get("Away"))) 
     
     result = {"Home": object.home_stats, "Away": object.away_stats}
-    
+
     return JsonResponse(json.dumps(result), safe=False)
 
 

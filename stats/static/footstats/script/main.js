@@ -7,20 +7,27 @@ function displayStats(){
   const url = '/compare/';
 
   //Get name of selected home team
-  const form = document.getElementById("teamSelection");
-  const selectHome = form.querySelector("select[name='homeTeam']");
-  const selectedHomeOption = selectHome.options[selectHome.selectedIndex];
+  const selectHome = document.querySelector("select[name='homeTeam']");
+  const selectedHomeIndex = selectHome.selectedIndex;
+  const selectedHomeOption = selectHome.options[selectedHomeIndex];
   const homeTeam = selectedHomeOption.text;
 
+
   //Get name of selected away team
-  const selectAway = form.querySelector("select[name='awayTeam']");
-  const selectedAwayOption = selectAway.options[selectAway.selectedIndex];
+  const selectAway = document.querySelector("select[name='homeTeam']");
+  const selectedAwayIndex = selectHome.selectedIndex;
+  const selectedAwayOption = selectAway.options[selectedAwayIndex];
   const awayTeam = selectedAwayOption.text;
-  let stats = "";
 
   if (homeTeam === "Select Team" || awayTeam === "Select Team"){
+    console.log("Select both teams you dumbass ^_^");
     return 0;
   }
+
+    //Unhide hidden divs
+    document.getElementById("homeStats").hidden = false;
+    document.getElementById("awayStats").hidden = false;
+    document.getElementById("prediction").hidden = false;
 
   const data = { 
     Home: homeTeam,
@@ -50,8 +57,7 @@ function populateDom(stats){
   let homeData = JSON.parse(stats).Home;
   let awayData = JSON.parse(stats).Away;
 
-  console.log(homeData);
-  console.log(awayData);
+  loadGraps(homeData, awayData);
 }     
 
 function getCookie(name) {
@@ -71,8 +77,8 @@ function getCookie(name) {
 
 
 function loadGraps(a, b){
-  let home = JSON.parse(a);
-  let away = JSON.parse(b);
+  let home = a;
+  let away = b;
   let homePie = [];
   let homeGraph = [];
   let awayPie = [];
@@ -107,7 +113,7 @@ function showHomePie(x){
   new Chart(ctx, {
     type: 'doughnut',
     data: {
-      labels: ['% of wins', '% of draws', '% of loses'],
+      labels: ['Win %', 'Draw %', '%Lose %'],
       datasets: [{
         data: stats,
         backgroundColor: ['#68bbb8','#f2c38e','#e55a5a'],
@@ -134,7 +140,6 @@ function showHomeGraph(x){
     data: {
       labels: ['Scored', 'Conceded'],
       datasets: [{
-        label: 'Goals',
         data: stats,
         backgroundColor: ['#68bbb8','#f2c38e'],
         borderWidth: 0
@@ -185,7 +190,6 @@ function showAwayGraph(x){
     data: {
       labels: ['Scored', 'Conceded'],
       datasets: [{
-        label: 'Goals',
         data: stats,
         backgroundColor: ['#68bbb8','#f2c38e'],
         borderWidth: 0

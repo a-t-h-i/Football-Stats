@@ -1,81 +1,107 @@
 {% extends 'index.html' %}
 {% block content %}
 <div id="main">
-  <p>{{error}}</p>
+  <table>
+    <tr>
 
-  <form id="teamSelection">
-    {% csrf_token %}
-    <table>
-      <tr>
-  
-        <td>
-          <select name="homeTeam">
-            <option value="" selected>Select Team</option>
-            {% if names %}
-            {% for name in names %}                                                          
-              <option value="{{ name }}">{{ name }}</option>
-            {% endfor %}
-            {% endif %}
-          </select>
-        </td>
+      <td>
+        <select name="homeTeam">
+          <option value="" selected>Select Team</option>
+          {% if names %}
+          {% for name in names %}                                                          
+            <option value="{{ name }}">{{ name }}</option>
+          {% endfor %}
+          {% endif %}
+        </select>
+      </td>
 
-        <td><h4> vs </h4></td>
+      <td><h4> vs </h4></td>
 
-        <td>
-          <select name="awayTeam">
-            <option value"" selected>Select Team</option>
-            {% if names %}
+      <td>
+        <select name="awayTeam">
+          <option value"" selected>Select Team</option>
+          {% if names %}
 
-            {% for name in names %}
-              <option value="{{ name }}">{{ name }}</option>
-            {% endfor %}
+          {% for name in names %}
+            <option value="{{ name }}">{{ name }}</option>
+          {% endfor %}
 
-            {% endif %}
-          </select>
-        </td>
-  
-        <td><button type="submit" onclick="displayStats()">Compare</button></td>
+          {% endif %}
+        </select>
+      </td>
 
-      </tr>
-    </table>
-  </form>
+      <td><button type="submit" onclick="start()">Compare</button></td>
 
-  <table id="compare_stats">
-    <!-- Javascript will populate these stats based on the json info it recieved -->
-
-      <tr>
-        <td>
-          <canvas id="homePie"></canvas>
-          <canvas id="homeGraph"></canvas>
-  
-        </td>
-        <td></td>
-        <td>
-          <canvas id="awayPie"> </canvas>
-          <canvas id="awayGraph"> </canvas>
-        </td>
-        <td></td>
-      </tr>
-
+    </tr>
   </table>
 
 
-  {% if home and away %}
-  <form  method="post" action="/predict/">
-    <!-- I'll handle this in the javascript backend and display the response here -->
-    {% csrf_token %}
+  <div id="homeStats" hidden>
+    <table >
+      <!-- Javascript will populate these stats based on the json info it recieved -->
+      <th id="homeTableHeader"></th>
+      
+      <tr>
+        
+        <td id="homeGraphs">
+            <canvas id="homePie"></canvas>
+        </td>
+        
+        <td>
+            <canvas id="homeGraph"></canvas>
+        </td>
+      
+      </tr>
+
+      <tr>
+      
+        <td id="homeNumbers">
+          <p>Arsenal has done this and this and that</p>
+        </td>
+      
+      </tr>
+    
+    </table>
+  </div>
+  
+  <div id="awayStats" hidden>
+    <table >
+      <!-- Javascript will populate these stats based on the json info it recieved -->
+      
+      <th id="awayTabeHeader"></th>
+      <tr>
+      
+        <td id="awayGraphs">
+          <canvas id="awayPie"></canvas>
+        </td>
+
+        <td>
+          <canvas id="awayGraph"></canvas>
+        </td>
+      
+      </tr>
+      
+      <tr>
+
+        <td id="awayNumbers">
+          <p>Barcelona has done this and this and that</p>
+        </td>
+      
+      </tr>
+    </table>
+  </div>
+
+  <div id="prediction" hidden>
     <button id="predict" onclick="focus_prediction()">Get Analysis</button>
     <table id="prediction">
-      {% if prediction %}
       <tr>
         <td colspan="4">
           <pre id="analysis">{{prediction}}</pre>
         </td>
       </tr>
-      {% endif %}
     </table>
-  </form>
-  {% endif %}
+  </div>
+
 </div>
 {% endblock content %}
 
