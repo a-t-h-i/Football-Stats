@@ -2,53 +2,102 @@ const script = document.createElement('script');
 script.src = 'https://cdn.jsdelivr.net/npm/chart.js';
 document.head.appendChild(script);
 
-let home; 
-let away;
+function displayStats(){
+  const xhr = new XMLHttpRequest();
+  const url = '/compare/';
 
-function getStats(home, away){
-  home, away = [JSON.parse(home), JSON.parse(away)]
-  loadGraps();
+  //Get name of selected home team
+  const form = document.getElementById("teamSelection");
+  const selectHome = form.querySelector("select[name='homeTeam']");
+  const selectedHomeOption = selectHome.options[selectHome.selectedIndex];
+  const homeTeam = selectedHomeOption.text;
+
+  //Get name of selected away team
+  const selectAway = form.querySelector("select[name='awayTeam']");
+  const selectedAwayOption = selectAway.options[selectAway.selectedIndex];
+  const awayTeam = selectedAwayOption.text;
+
+  console.log("I have been called yay!");
+
+  if (homeTeam === "" || awayTeam === ""){
+    return 0;
+  }
+
+  const data = { 
+    Home: homeTeam,
+    Away: awayTeam
+  };
+  
+  xhr.open('POST', url);
+  xhr.setRequestHeader('Content-Type', 'application/json');
+
+  // Retrieve the CSRF token from the cookie
+  const csrftoken = getCookie('csrftoken');
+
+  // Set the CSRF token as a header in the request
+  xhr.setRequestHeader('X-CSRFToken', csrftoken);
+
+  xhr.onload = function() {
+      if (xhr.status === 200) {
+          const response = JSON.parse(xhr.responseText);
+          console.log(response);
+      } else {
+          console.log('Request failed.  Returned status of ' + xhr.status);
+      }
+  };
+  xhr.send(JSON.stringify(data));
+}
+
+function getCookie(name) {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== '') {
+      const cookies = document.cookie.split(';');
+      for (let i = 0; i < cookies.length; i++) {
+          const cookie = cookies[i].trim();
+          if (cookie.substring(0, name.length + 1) === (name + '=')) {
+              cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+              break;
+          }
+      }
+  }
+  return cookieValue;
 }
 
 
-function focuStats(){
-  console.log("I have been called up. Yay!");
-  stats.focus();
+function loadGraps(a, b){
+  let home = JSON.parse(a);
+  let away = JSON.parse(b);
+  let homePie = [];
+  let homeGraph = [];
+  let awayPie = [];
+  let awayGraph = [];
+
+  homePie.push(home.WinPercentage);
+  homePie.push(home.DrawPercentage);
+  homePie.push(home.LosePercentage);
+
+  homeGraph.push(home.Goals);
+  homeGraph.push(home.Conceded);
+
+  awayPie.push(away.WinPercentage);
+  awayPie.push(away.DrawPercentage);
+  awayPie.push(away.LosePercentage);
+
+  awayGraph.push(away.Goals);
+  awayGraph.push(away.Conceded);
+
+  showHomePie(homePie);
+  showHomeGraph(homeGraph);
+  showAwayPie(awayPie);
+  showAwayGraph(awayGraph);
+
 }
 
-function focusPrediction(){
-  console.log("I have also been called up. Yay ^_^");
-  prediction.focus();
-}
 
-function loadGraps(){
-  var homePie = [];
-  var homeGraph = [];
-  var awayPie = [];
-  var awayGraph = [];
-
-  homePie.push(home["Win Percentage"]);
-  homePie.push(home["Draw Percentage"]);
-  homePie.push(home["Lose Percentage"]);
-
-  homeGraph.push(home["Goals"]);
-  homeGraph.push(home["Conceded"]);
-
-  awayPie.push(away["Win Percentage"]);
-  awayPie.push(away["Draw Percentage"]);
-  awayPie.push(away["Lose Percentage"]);
-
-  awayGraph.push(away["Goals"]);
-  awayGraph.push(away["Conceded"]);
-
-  homePie(homePie);
-  homeGraph(homeGraph);
-}
-
-//Pie
-function homePie(x){
+function showHomePie(x){
   const ctx = document.getElementById('homePie');
-  let stats = x
+  let stats = x;
+  
   new Chart(ctx, {
     type: 'doughnut',
     data: {
@@ -69,10 +118,62 @@ function homePie(x){
   });
 }
 
-//Bar
-function homeGraph(x){
+
+function showHomeGraph(x){
   const ctx = document.getElementById('homeGraph');
-  let stats = x
+  let stats = x;
+
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Scored', 'Conceded'],
+      datasets: [{
+        label: 'Goals',
+        data: stats,
+        backgroundColor: ['#68bbb8','#f2c38e'],
+        borderWidth: 0
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+}
+
+//Away
+function showAwayPie(x){
+  const ctx = document.getElementById('awayPie');
+  let stats = x;
+
+  new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: ['Win %', 'Draw %', 'Lose %'],
+      datasets: [{
+        data: stats,
+        backgroundColor: ['#68bbb8','#f2c38e','#e55a5a'],
+        borderWidth: -2
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: false
+        }
+      }
+    }
+  });
+}
+
+//Bar
+function showAwayGraph(x){
+  const ctx = document.getElementById('awayGraph');
+  let stats = x;
+
   new Chart(ctx, {
     type: 'bar',
     data: {

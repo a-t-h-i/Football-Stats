@@ -1,14 +1,13 @@
-
 {% extends 'index.html' %}
 {% block content %}
 <div id="main">
   <p>{{error}}</p>
-  <form id="teamSelection" method="post" action="/compare/" onsubmit="return checkSelect()">
-    {% csrf_token %} <!-- add this for security -->
+  <form id="teamSelection">
+    {% csrf_token %}
     <table>
       <tr>
         <td>
-          <select name="home_team">
+          <select name="homeTeam">
             
             {% if selected_home %}
             <option value="{{selected_home}}" selected>{{selected_home}}</option>
@@ -27,7 +26,7 @@
         <td><h4> vs </h4></td>
 
         <td>
-          <select name="away_team">
+          <select name="awayTeam">
             {% if selected_away%}
             <option value="{{selected_away}}" selected>{{selected_away}}</option>
             {% endif %}
@@ -42,19 +41,20 @@
           </select>
         </td>
 
-        <td><button type="submit" onclick="homePie([10,30,60])">Compare</button></td>
+        <td><button type="submit" onclick="displayStats()">Compare</button></td>
 
       </tr>
     </table>
   </form>
 
   <table id="compare_stats">
-      {% if home and away %}
-      <p>{{home.Goals}}</p>
+    <!-- Javascript will populate these stats based on the json info it recieved -->
+
       <tr>
         <td>
           <canvas id="homePie"></canvas>
           <canvas id="homeGraph"></canvas>
+  
         </td>
         <td></td>
         <td>
@@ -63,7 +63,7 @@
         </td>
         <td></td>
       </tr>
-      {% endif %}
+
   </table>
 
 
@@ -74,7 +74,9 @@
     <table id="prediction">
       {% if prediction %}
       <tr>
-        <td colspan="4">{{prediction}}</td>
+        <td colspan="4">
+          <pre id="analysis">{{prediction}}</pre>
+        </td>
       </tr>
       {% endif %}
     </table>
