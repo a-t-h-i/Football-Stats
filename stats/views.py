@@ -6,8 +6,6 @@ import main, json
 object = main.app("one_user")
 names = object.get_names()
 stats = object.get_stats()
-home_stats = ""
-away_stats = ""
 
 def initialise():
     return main.app()
@@ -24,31 +22,26 @@ def team_stats(search):
 
 
 def index_view(request):
-    global stats, names, home_stats, away_stats
-    home_stats, away_stats = "", ""  # Reset stats
+    global stats, names
     context = {}
     context["names"] = names
     return render(request, "stats/home.html", context)
 
 
 def compare_view(request):
-    global home_stats, away_stats
-    
     body = json.loads(request.body)
-     
-    home_stats = team_stats(body.get("Home"))
-    away_stats = team_stats(body.get("Away"))  
-     
-    result = {"Home": home_stats, "Away": away_stats}
     
-    print(result)
+    if (body.get("Home") == "Select Team" or body.get("Away") == "Select Team"):
+        return JsonResponse(json.dumps({"Error":"Not found!"}), safe=False)
+        
+    object.set_home_stats(team_stats(body.get("Home")))
+    object.set_away_stats(team_stats(body.get("Away"))) 
+    
+    result = {"Home": object.home_stats, "Away": object.away_stats}
+    
     return JsonResponse(json.dumps(result), safe=False)
 
 
-def predict_view(request):
-    context = {}
-    context["names"] = names
-    context["home"] = home_stats
-    context["away"] = away_stats
-    context["prediction"] = object.get_prediction(home_stats, away_stats)
-    return render(request, "stats/home.html", context)
+def predict_view():
+    prediction = {"Prediction":object.get_prediction(object.home_stats, object.away_stats)}
+    return JsonResponse(json.dumps(prediction, safe=False))

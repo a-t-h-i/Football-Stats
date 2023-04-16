@@ -2,24 +2,20 @@
 {% block content %}
 <div id="main">
   <p>{{error}}</p>
+
   <form id="teamSelection">
     {% csrf_token %}
     <table>
       <tr>
+  
         <td>
           <select name="homeTeam">
-            
-            {% if selected_home %}
-            <option value="{{selected_home}}" selected>{{selected_home}}</option>
-            {% endif %}
-
-            {% if not selected_home %}
             <option value="" selected>Select Team</option>
-            {% endif %}
-            
+            {% if names %}
             {% for name in names %}                                                          
               <option value="{{ name }}">{{ name }}</option>
             {% endfor %}
+            {% endif %}
           </select>
         </td>
 
@@ -27,20 +23,17 @@
 
         <td>
           <select name="awayTeam">
-            {% if selected_away%}
-            <option value="{{selected_away}}" selected>{{selected_away}}</option>
-            {% endif %}
-            
-            {% if not selected_away %}
             <option value"" selected>Select Team</option>
-            {% endif %}
+            {% if names %}
 
             {% for name in names %}
               <option value="{{ name }}">{{ name }}</option>
             {% endfor %}
+
+            {% endif %}
           </select>
         </td>
-
+  
         <td><button type="submit" onclick="displayStats()">Compare</button></td>
 
       </tr>
@@ -69,6 +62,7 @@
 
   {% if home and away %}
   <form  method="post" action="/predict/">
+    <!-- I'll handle this in the javascript backend and display the response here -->
     {% csrf_token %}
     <button id="predict" onclick="focus_prediction()">Get Analysis</button>
     <table id="prediction">

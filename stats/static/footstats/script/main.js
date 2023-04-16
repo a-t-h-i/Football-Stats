@@ -17,9 +17,8 @@ function displayStats(){
   const selectedAwayOption = selectAway.options[selectAway.selectedIndex];
   const awayTeam = selectedAwayOption.text;
 
-  console.log("I have been called yay!");
 
-  if (homeTeam === "" || awayTeam === ""){
+  if (homeTeam === "Select Team" || awayTeam === "Select Team"){
     return 0;
   }
 

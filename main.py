@@ -19,7 +19,8 @@ class app(object):
         self.rows, self.columns = self.df.shape
         self.teams = self._create_teams_list()
         self.team_stats = self._create_stats()
-    
+        self.home_stats = ""
+        self.away_stats = ""
     
     def _read_file(self, file):
         return pd.read_csv(file, header=1)
@@ -85,11 +86,20 @@ class app(object):
     
     def get_stats(self):
         return self.team_stats
+    
+    
+    def set_home_stats(self, stats):
+        self.home_stats = stats
+        
 
+    def set_away_stats(self, stats):
+        self.away_stats = stats    
+    
 
     def _ai_prompt(self, home_team, away_team):
         return f"""
-    Assuming the role of a sports analyst, you are provided with data on the performance of two soccer teams, in the current season. The data includes the following variables:
+    Assuming the role of a sports analyst, you are provided with data on the performance of two soccer teams,
+    in the current season. The data includes the following variables:
 
     Home Team:
     {home_team}
