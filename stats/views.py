@@ -12,7 +12,7 @@ def initialise():
 
 
 def team_stats(search):
-    global stats
+    
     for team in stats:
         if team["Name"] == search:
             return team

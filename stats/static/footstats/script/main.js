@@ -2,6 +2,7 @@ const script = document.createElement('script');
 script.src = 'https://cdn.jsdelivr.net/npm/chart.js';
 document.head.appendChild(script);
 
+var renderedCharts = []
 function displayStats(){
   const xhr = new XMLHttpRequest();
   const url = '/compare/';
@@ -56,8 +57,17 @@ function displayStats(){
 function populateDom(stats){
   let homeData = JSON.parse(stats).Home;
   let awayData = JSON.parse(stats).Away;
-
   loadGraps(homeData, awayData);
+  console.log(awayData);
+  document.querySelector('#homeName').innerHTML = homeData.Name;
+  document.querySelector('#awayName').innerHTML = awayData.Name;
+  document.querySelector('#Played').innerHTML = "Has played " + awayData.Played;
+  document.querySelector('#Points').innerHTML = awayData.Points;
+  document.querySelector('#Scored').innerHTML = awayData.Scored;
+  document.querySelector('#Conceded').innerHTML = awayData.Conceded;
+  document.querySelector('#Won').innerHTML = awayData.Won;
+  document.querySelector('#Draws').innerHTML = awayData.Draws;
+
 }     
 
 function getCookie(name) {
@@ -74,7 +84,6 @@ function getCookie(name) {
   }
   return cookieValue;
 }
-
 
 function loadGraps(a, b){
   let home = a;
@@ -98,26 +107,31 @@ function loadGraps(a, b){
   awayGraph.push(away.Goals);
   awayGraph.push(away.Conceded);
 
-  showHomePie(homePie);
-  showHomeGraph(homeGraph);
-  showAwayPie(awayPie);
-  showAwayGraph(awayGraph);
+  for (let i = 0; i != renderedCharts.length; i++){
+    //Destroy rendered charts if they exist
+    renderedCharts[i].destroy();
+  }
+
+  renderedCharts.push(showHomePie(homePie));
+  renderedCharts.push(showHomeGraph(homeGraph));
+  renderedCharts.push(showAwayPie(awayPie));
+  renderedCharts.push(showAwayGraph(awayGraph));
 
 }
-
 
 function showHomePie(x){
   const ctx = document.getElementById('homePie');
   let stats = x;
   
-  new Chart(ctx, {
+  return new Chart(ctx, {
     type: 'doughnut',
     data: {
       labels: ['Win %', 'Draw %', '%Lose %'],
       datasets: [{
         data: stats,
         backgroundColor: ['#68bbb8','#f2c38e','#e55a5a'],
-        borderWidth: -2
+        borderWidth: 0,
+        borderRadius: 5
       }]
     },
     options: {
@@ -135,14 +149,16 @@ function showHomeGraph(y){
   const ctx = document.getElementById('homeGraph');
   let stats = y;
 
-  new Chart(ctx, {
+  return new Chart(ctx, {
     type: 'bar',
     data: {
       labels: ['Scored', 'Conceded'],
       datasets: [{
+        label: "Offence & Deffence",
         data: stats,
         backgroundColor: ['#68bbb8','#f2c38e'],
-        borderWidth: 0
+        borderWidth: 0,
+        borderRadius: 20
       }]
     },
     options: {
@@ -160,17 +176,19 @@ function showAwayPie(y){
   const ctx = document.getElementById('awayPie');
   let stats = y;
 
-  new Chart(ctx, {
+  return new Chart(ctx, {
     type: 'doughnut',
     data: {
       labels: ['Win %', 'Draw %', 'Lose %'],
       datasets: [{
         data: stats,
         backgroundColor: ['#68bbb8','#f2c38e','#e55a5a'],
-        borderWidth: -2
+        borderWidth: 0,
+        borderRadius: 5
       }]
     },
     options: {
+      
       scales: {
         y: {
           beginAtZero: false
@@ -185,14 +203,16 @@ function showAwayGraph(x){
   const ctx = document.getElementById('awayGraph');
   let stats = x;
 
-  new Chart(ctx, {
+  return new Chart(ctx, {
     type: 'bar',
     data: {
       labels: ['Scored', 'Conceded'],
       datasets: [{
+        label: "Offence & Deffence",
         data: stats,
         backgroundColor: ['#68bbb8','#f2c38e'],
-        borderWidth: 0
+        borderWidth: 0,
+        borderRadius: 20
       }]
     },
     options: {

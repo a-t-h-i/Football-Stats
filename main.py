@@ -2,14 +2,13 @@
 from ai import prediction
 from calc import calculate
 import glob, pandas as pd
-
 from dbox import drop
 
 
 class app(object):
     
     def __init__(self, id):
-        drop.check()
+        drop.check() #Check for the latest data
         self.object_id = id
         self.csv_path = 'csv'
         self.csv_files = glob.glob(self.csv_path + '/*.csv')
@@ -21,6 +20,7 @@ class app(object):
         self.team_stats = self._create_stats()
         self.home_stats = ""
         self.away_stats = ""
+        
     
     def _read_file(self, file):
         return pd.read_csv(file, header=1)
