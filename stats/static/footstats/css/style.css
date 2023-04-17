@@ -9,6 +9,7 @@ body {
   color: #333;
 }
 
+
 /* Header Styles */
 header {
   display: flex;
@@ -17,6 +18,10 @@ header {
   padding: 1rem;
   background-color: #fff;
   box-shadow: 0 2px 5px rgba(0,0,0,.1);
+}
+
+.hideme{
+  display: none;
 }
 
 .logo {
@@ -99,5 +104,20 @@ select {
 select:focus {
   outline: none;
   box-shadow: 0 0 0 3px #999;
+}
+
+#main{
+  margin: auto;
+  width: 50%;
+  display: block;
+  font-size: 1rem;
+  font-weight: bold;
+  padding: .5rem 1rem;
+  margin-bottom: 1rem;
+  border-radius: 3px;
+  border: none;
+  background-color: #fff;
+  color: #333;
+  box-shadow: 0 2px 5px rgba(0,0,0,.1);
 }
 

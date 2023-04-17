@@ -1,53 +1,47 @@
 from django.shortcuts import render
-import app
+from django.http import JsonResponse
+import main, json
 
-stats = ""
-home_stats = ""
-away_stats = ""
-names = ""
-stats = ""
 
+object = main.app("one_user")
+names = object.get_names()
+stats = object.get_stats()
 
 def initialise():
-    return app.main()
+    return main.app()
 
 
-def teamStats(search):
-    global stats
-
+def team_stats(search):
+    
     for team in stats:
-        if team["Name"].upper() == search.upper():
+        if team["Name"] == search:
             return team
-    return {"Error": f"{search} not found"}
+    response = f"{'Error, Could not find stats for {search}'}"
+    
+    return json.dumps(response)
 
 
 def index_view(request):
     global stats, names
     context = {}
-    names, stats = initialise()
-    prediction = ""
     context["names"] = names
-
-    # Render takes in 3 parameters: request, html file and the context in {} which helps pass values from things like variables
     return render(request, "stats/home.html", context)
 
 
 def compare_view(request):
-    global copy, home_stats, away_stats
+    body = json.loads(request.body)
+    
+    if (body.get("Home") == "Select Team" or body.get("Away") == "Select Team"):
+        return JsonResponse(json.dumps({"Error":"Not found!"}), safe=False)
+        
+    object.set_home_stats(team_stats(body.get("Home")))
+    object.set_away_stats(team_stats(body.get("Away"))) 
+    
+    result = {"Home": object.home_stats, "Away": object.away_stats}
 
-    home_stats = teamStats(request.POST.get("home_team"))
-    away_stats = teamStats(request.POST.get("away_team"))
-    context = {}
-    context["names"] = names
-    context["home"] = home_stats
-    context["away"] = away_stats
-    return render(request, "stats/home.html", context)
+    return JsonResponse(json.dumps(result), safe=False)
 
 
-def predict_view(request):
-    context = {}
-    context["names"] = names
-    context["home"] = home_stats
-    context["away"] = away_stats
-    context["prediction"] = app.getPrediction(home_stats, away_stats)
-    return render(request, "stats/home.html", context)
+def predict_view():
+    prediction = {"Prediction":object.get_prediction(object.home_stats, object.away_stats)}
+    return JsonResponse(json.dumps(prediction, safe=False))

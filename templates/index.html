@@ -18,5 +18,22 @@
     {% endblock content %}
 
   </body>
+
+  <script>
+
+    function load(){
+      window.addEventListener("DOMContentLoaded", (event) => {
+        event.preventDefault()
+        resolve();
+      });
+    }
+
+    async function start() {
+      load();
+      displayStats();
+    }
+
+  </script>
+
   <footer><h6 id="copyright">© Football Stats 2023</h6></footer>
 </html>
