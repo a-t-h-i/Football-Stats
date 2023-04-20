@@ -99,19 +99,19 @@
   display: inline-block; /* this is optional, but it prevents the button from taking up the full width of the container */
 }
 
+#canvas-container {
+  text-align: center;
+}
+
+canvas {
+  display: inline-block; /* this is optional, but it prevents the button from taking up the full width of the container */
+}
+
 .display {
   border: 1px solid #ccc;
   border-radius: 10px;
   padding: 10px;
 }
-
-.brrrr {
-  display: block;
-  content: "";
-  margin-top: 10px;
-  border-top: 1px solid #d3d3d3;
-}
-
 
 
 /* Body Styles */

@@ -36,23 +36,24 @@
   </div>
 
   <div id="homeStats" class="display" hidden>
-    <table >
-      <!-- Javascript will populate these stats based on the json info it recieved -->
-      <th id="homeTableHeader"></th>
+    <div id="canvas-container">
+      <table >
+        <!-- Javascript will populate these stats based on the json info it recieved -->
+        <th id="homeTableHeader"></th>
 
-      <tr>
-  
-        <td id="homeGraphs">
-            <canvas id="homePie"></canvas>
-        </td>
+        <tr>
+    
+          <td id="homeGraphs">
+              <canvas id="homePie"></canvas>
+          </td>
+          
+          <td>
+              <canvas id="homeGraph"></canvas>
+          </td>
         
-        <td>
-            <canvas id="homeGraph"></canvas>
-        </td>
-      
-      </tr>
-    </table>
-
+        </tr>
+      </table>
+    </div>
     <br>
 
     <p id="homeName" style="text-align:center"></p>

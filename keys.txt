@@ -1,5 +1,0 @@
-export CLIENT_ID=d7q109udvlp4tsu
-export CLIENT_SECRET=803l22ywy0uddge
-export MY_DB=postgres://my_db_w0kq_user:CVhpg5yPP7YwR6HE2XGEAczUP2JWbLxT@dpg-cgg2gt4eoogqfc7l73l0-a/my_db_w0kq
-export MY_KEY=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
-export REFRESH_TOKEN=_pv6Oy6ypYoAAAAAAAAAAdx6x9sR48Y5JU8n64cSrmV1szJi6W8VhL756yQomrsL
