@@ -52,17 +52,73 @@
         </td>
       
       </tr>
-
-      <tr>
-      
-        <td id="homeNumbers">
-        </td>
-      
-      </tr>
-    
     </table>
+
+    <table style="width: 100%;" id="homeTable">
+      <tbody>
+          <tr>
+              <td style="width: 25.0000%;"><br></td>
+              <td style="width: 25.0000%;">
+                  <div style="text-align: center;"><strong>Home</strong></div>
+              </td>
+              <td style="width: 25.0000%;">
+                  <div style="text-align: center;"><strong>Away</strong></div>
+              </td>
+              <td style="width: 25.0000%;">
+                  <div style="text-align: center;"><strong>Total</strong></div>
+              </td>
+          </tr>
+          <tr id="homePlayed">
+              <td style="width: 25.0000%;"><strong>Played</strong></td>
+              <td style="width: 25%; text-align: center;" id="homePlayedHome"></td>
+              <td style="width: 25%; text-align: center;" id="homePlayedAway"></td>
+              <td style="width: 25%; text-align: center;" id="homePlayedTotal"></td>
+          </tr>
+          <tr id="homeWins">
+              <td style="width: 25.0000%;"><strong>Won</strong></td>
+              <td style="width: 25%; text-align: center;" id="homeWonHome"></td>
+              <td style="width: 25%; text-align: center;" id="homeWonAway"></td>
+              <td style="width: 25%; text-align: center;" id="homeWonTotal"></td>
+          </tr>
+          <tr id="homeDraws">
+              <td style="width: 25.0000%;"><strong>Drawn</strong></td>
+              <td style="width: 25%; text-align: center;" id="homeDrawnHome"></td>
+              <td style="width: 25%; text-align: center;" id="homeDrawnAway"></td>
+              <td style="width: 25%; text-align: center;" id="homeDrawnTotal"></td>
+          </tr>
+          <tr id="homeLoses">
+              <td style="width: 25.0000%;"><strong>Lost</strong></td>
+              <td style="width: 25%; text-align: center;" id="homeLostHome"></td>
+              <td style="width: 25%; text-align: center;" id="homeLostAway"></td>
+              <td style="width: 25%; text-align: center;" id="homeLostTotal"></td>
+          </tr>
+          <tr id="homeWinPerc">
+              <td style="width: 25.0000%;"><strong>Win %</strong></td>
+              <td style="width: 25%; text-align: center;" id="homeWinPercHome"></td>
+              <td style="width: 25%; text-align: center;" id="homeWinPercAway"></td>
+              <td style="width: 25%; text-align: center;" id="homeWinPercTotal"></td>
+          </tr>
+          <tr id="homeDrawPerc">
+              <td style="width: 25.0000%;"><strong>Draw % </strong></td>
+              <td style="width: 25%; text-align: center;" id="homeDrawPercHome"></td>
+              <td style="width: 25%; text-align: center;" id="homeDrawPercAway">&nbsp;</td>
+              <td style="width: 25%; text-align: center;" id="homeDrawPercTotal"></td>
+          </tr>
+          <tr id="homeLosePerc">
+              <td style="width: 25.0000%;"><strong>Lose %</strong></td>
+              <td style="width: 25%; text-align: center;" id="homeLosePercHome"></td>
+              <td style="width: 25%; text-align: center;" id="homeLosePercAway">&nbsp;</td>
+              <td style="width: 25.0000%;">
+                  <div style="text-align: center;" id="homeLosePercTotal"></div>
+              </td>
+          </tr>
+      </tbody>
+  </table>
+
   </div>
-  
+
+  <br>
+
   <div id="awayStats" hidden>
     <table >
       <!-- Javascript will populate these stats based on the json info it recieved -->
@@ -79,31 +135,78 @@
         </td>
       
       </tr>
-      
-      <tr>
-        <td>
-          <p id="Position"></p>
-          <p id="Points"></p>
-          <p id="Played"></p>
-          <p id="Won"></p>
-          <p id="Lost"></p>
-          <p id="Draws"></p>
-          <p id="Scored"></p>
-          <p id="Conceded"></p>
-          <p id="WinPercentage"></p>
-          <p id="DrawPercentage"></p>
-          <p id="LosePercentage"></p>
-        </td>
-      </tr>
     </table>
+
+    <table style="width: 100%;" id="awayTable">
+      <tbody>
+          <tr>
+              <td style="width: 25.0000%;"><br></td>
+              <td style="width: 25.0000%;">
+                  <div style="text-align: center;"><strong>Home</strong></div>
+              </td>
+              <td style="width: 25.0000%;">
+                  <div style="text-align: center;"><strong>Away</strong></div>
+              </td>
+              <td style="width: 25.0000%;">
+                  <div style="text-align: center;"><strong>Total</strong></div>
+              </td>
+          </tr>
+          <tr id="awayPlayed">
+              <td style="width: 25.0000%;"><strong>Played</strong></td>
+              <td style="width: 25%; text-align: center;" id="awayPlayedHome"></td>
+              <td style="width: 25%; text-align: center;" id="awayPlayedAway"></td>
+              <td style="width: 25%; text-align: center;" id="awayPlayedTotal"></td>
+          </tr>
+          <tr id="awayWins">
+              <td style="width: 25.0000%;"><strong>Won</strong></td>
+              <td style="width: 25%; text-align: center;" id="awayWonHome"></td>
+              <td style="width: 25%; text-align: center;" id="awayWonAway"></td>
+              <td style="width: 25%; text-align: center;" id="awayWonTotal"></td>
+          </tr>
+          <tr id="awayDraws">
+              <td style="width: 25.0000%;"><strong>Drawn</strong></td>
+              <td style="width: 25%; text-align: center;" id="awayDrawnHome"></td>
+              <td style="width: 25%; text-align: center;" id="awayDrawnAway"></td>
+              <td style="width: 25%; text-align: center;" id="awayDrawnTotal"></td>
+          </tr>
+          <tr id="awayLoses">
+              <td style="width: 25.0000%;"><strong>Lost</strong></td>
+              <td style="width: 25%; text-align: center;" id="awayLostHome"></td>
+              <td style="width: 25%; text-align: center;" id="awayLostAway"></td>
+              <td style="width: 25%; text-align: center;" id="awayLostTotal"></td>
+          </tr>
+          <tr id="awayWinPerc">
+              <td style="width: 25.0000%;"><strong>Win %</strong></td>
+              <td style="width: 25%; text-align: center;" id="awayWinPercHome"></td>
+              <td style="width: 25%; text-align: center;" id="awayWinPercAway"></td>
+              <td style="width: 25%; text-align: center;" id="awayWinPercTotal"></td>
+          </tr>
+          <tr id="awayDrawPerc">
+              <td style="width: 25.0000%;"><strong>Draw % </strong></td>
+              <td style="width: 25%; text-align: center;" id="awayDrawPercHome"></td>
+              <td style="width: 25%; text-align: center;" id="awayDrawPercAway">&nbsp;</td>
+              <td style="width: 25%; text-align: center;" id="awayDrawPercTotal"></td>
+          </tr>
+          <tr id="awayLosePerc">
+              <td style="width: 25.0000%;"><strong>Lose %</strong></td>
+              <td style="width: 25%; text-align: center;" id="awayLosePercHome"></td>
+              <td style="width: 25%; text-align: center;" id="awayLosePercAway">&nbsp;</td>
+              <td style="width: 25.0000%;">
+                  <div style="text-align: center;" id="awayLosePercTotal"></div>
+              </td>
+          </tr>
+      </tbody>
+  </table>
   </div>
 
+  <br>
+
   <div id="prediction" hidden>
-    <button id="predict" onclick="focus_prediction()">Get Analysis</button>
+    <button id="predict" onclick="getAnalysis()">Get Analysis</button>
     <table id="prediction">
       <tr>
         <td colspan="4">
-          <pre id="analysis">{{prediction}}</pre>
+          <code id="analysis"></code>
         </td>
       </tr>
     </table>

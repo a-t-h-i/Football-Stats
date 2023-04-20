@@ -88,14 +88,6 @@ class app(object):
     def get_stats(self):
         return self.team_stats
     
-    
-    def set_home_stats(self, stats):
-        self.home_stats = stats
-        
-
-    def set_away_stats(self, stats):
-        self.away_stats = stats    
-    
 
     def _ai_prompt(self, home_team, away_team):
         return f"""
