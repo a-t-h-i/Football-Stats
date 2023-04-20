@@ -47,5 +47,4 @@ def predict_view(request):
     
     prediction = {"Prediction":object.get_prediction(team_stats(body.get("Home")), 
                                                      team_stats(body.get("Away")))}
-    
     return JsonResponse(json.dumps(prediction), safe=False)

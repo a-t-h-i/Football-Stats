@@ -1,3 +1,119 @@
+#homeTable {
+  border-collapse: collapse;
+  width: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: #f2f2f2;
+}
+
+#homeTable td, #homeTable th {
+  border: none;
+  padding: 10px;
+  text-align: center;
+}
+
+#homeTable tbody tr:nth-child(odd) {
+  background-color: #f0f0f0;
+}
+
+#homeTable tbody tr:nth-child(even) {
+  background-color: #ffffff;
+}
+
+#homeTable tbody tr:first-child {
+  background-color: #f0f0f0;
+  font-weight: bold;
+  color: #333;
+}
+
+#homeTable td:first-child {
+  font-weight: bold;
+  color: #333;
+}
+
+
+.brrrr {
+  display: block;
+  content: "";
+  margin-top: 10px;
+  border-top: 1px solid #d3d3d3;
+}
+
+
+/* Away */
+
+#awayTable {
+  border-collapse: collapse;
+  width: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: #f2f2f2;
+}
+
+#awayTable td, #awayTable th {
+  border: none;
+  padding: 10px;
+  text-align: center;
+}
+
+#awayTable tbody tr:nth-child(odd) {
+  background-color: #f0f0f0;
+}
+
+#awayTable tbody tr:nth-child(even) {
+  background-color: #ffffff;
+}
+
+#awayTable tbody tr:first-child {
+  background-color: #f0f0f0;
+  font-weight: bold;
+  color: #333;
+}
+
+#awayTable td:first-child {
+  font-weight: bold;
+  color: #333;
+}
+
+#desc{
+  text-align: center;
+}
+
+#copyright{
+  text-align: center;
+}
+
+#predict-container {
+  text-align: center;
+}
+
+#predict {
+  display: inline-block; /* this is optional, but it prevents the button from taking up the full width of the container */
+}
+
+#select-container {
+  text-align: center;
+}
+
+#selection {
+  display: inline-block; /* this is optional, but it prevents the button from taking up the full width of the container */
+}
+
+.display {
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.brrrr {
+  display: block;
+  content: "";
+  margin-top: 10px;
+  border-top: 1px solid #d3d3d3;
+}
+
+
+
 /* Body Styles */
 body {
   margin: 0;
@@ -5,10 +121,9 @@ body {
   font-family: 'Open Sans', sans-serif;
   font-size: 16px;
   line-height: 1.5;
-  background-color: #f4f4f4;
+  background-color: #e6e6e6;
   color: #333;
 }
-
 
 /* Header Styles */
 header {
@@ -27,6 +142,7 @@ header {
 .logo {
   font-size: 2rem;
   font-weight: bold;
+  text-align: center;
 }
 
 nav ul {
@@ -75,7 +191,7 @@ button {
   text-decoration: none;
   background-color: #333;
   color: #fff;
-  border-radius: 3px;
+  border-radius: 10px;
   border: none;
   cursor: pointer;
   transition: all .2s ease-in-out;
@@ -94,11 +210,15 @@ select {
   font-weight: bold;
   padding: .5rem 1rem;
   margin-bottom: 1rem;
-  border-radius: 3px;
+  border-radius: 10px;
   border: none;
   background-color: #fff;
   color: #333;
   box-shadow: 0 2px 5px rgba(0,0,0,.1);
+}
+
+pre {
+  white-space: pre-wrap;
 }
 
 select:focus {
@@ -114,7 +234,7 @@ select:focus {
   font-weight: bold;
   padding: .5rem 1rem;
   margin-bottom: 1rem;
-  border-radius: 3px;
+  border-radius: 10px;
   border: none;
   background-color: #fff;
   color: #333;

@@ -42,9 +42,16 @@ function getAnalysis(){
   xhr.open('POST', url);
   xhr.setRequestHeader('Content-Type', 'application/json');
 
+  if (document.querySelector('#analysis').innerHTML === ""){
+    document.querySelector('#predict').innerHTML = "Loading...";
+  } else {
+    console.log("Oops lookse like you need to make another selection first :P");
+    return 0;
+  }
   xhr.onload = function() {
       if (xhr.status === 200) {
           const response = JSON.parse(xhr.responseText);
+          document.querySelector('#predict').innerHTML = "Get Analysis";
           showPrediction(response);
       }
   };
@@ -60,6 +67,7 @@ function displayStats(){
   let homeTeam = getSelection()[0];
   let awayTeam = getSelection()[1];
 
+  document.querySelector('#analysis').innerHTML = "";
 
   if (homeTeam === "Select Team" || awayTeam === "Select Team"){
     console.log("Select both teams you dumbass ^_^");
@@ -70,6 +78,7 @@ function displayStats(){
     document.getElementById("homeStats").hidden = false;
     document.getElementById("awayStats").hidden = false;
     document.getElementById("prediction").hidden = false;
+    document.getElementsByClassName("brrrr").hidden = false;
 
   const data = { 
     Home: homeTeam,
@@ -164,9 +173,8 @@ function displayAwayTable(data){
 
 function showPrediction(response){
   let prediction = JSON.parse(response).Prediction;
-  console.log(JSON.parse(response));
   //Code to show the prediction on the DOM
-  document.querySelector('#analysis').innerHTML = prediction;
+  document.querySelector('#analysis').textContent = prediction;
 }
 
 function loadGraps(a, b){
@@ -215,7 +223,7 @@ function showHomePie(x){
         data: stats,
         backgroundColor: ['#68bbb8','#f2c38e','#e55a5a'],
         borderWidth: 0,
-        borderRadius: 5
+        borderRadius: 8
       }]
     },
     options: {
@@ -242,7 +250,7 @@ function showHomeGraph(y){
         data: stats,
         backgroundColor: ['#68bbb8','#f2c38e'],
         borderWidth: 0,
-        borderRadius: 20
+        borderRadius: 10
       }]
     },
     options: {
@@ -268,7 +276,7 @@ function showAwayPie(y){
         data: stats,
         backgroundColor: ['#68bbb8','#f2c38e','#e55a5a'],
         borderWidth: 0,
-        borderRadius: 5
+        borderRadius: 8
       }]
     },
     options: {
@@ -296,7 +304,7 @@ function showAwayGraph(x){
         data: stats,
         backgroundColor: ['#68bbb8','#f2c38e'],
         borderWidth: 0,
-        borderRadius: 20
+        borderRadius: 10
       }]
     },
     options: {

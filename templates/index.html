@@ -4,11 +4,9 @@
   <head>
     <script src="{% static 'footstats/script/main.js' %}"></script>
     <link rel="stylesheet" type="text/css" href="{% static 'footstats/css/style.css' %}">
-    <h4 id="logo">Football Stats</h4>
-    {% if not home and not away %}
-    <p class="description">This app allows you to compare the performance of two football teams.</p>
-    <p>Please make a selection below and press the compare button</p>
-    {% endif %}
+    <h2 class="logo">Football Stats</h2>
+    <p id="desc" class="description">Select two teams to compare their performance.</p>
+
   </head>
 
   <body>

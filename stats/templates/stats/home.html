@@ -1,48 +1,47 @@
 {% extends 'index.html' %}
 {% block content %}
 <div id="main">
-  <table>
-    <tr>
 
-      <td>
-        <select name="homeTeam">
-          <option value="" selected>Select Team</option>
-          {% if names %}
-          {% for name in names %}                                                          
-            <option value="{{ name }}">{{ name }}</option>
-          {% endfor %}
-          {% endif %}
-        </select>
-      </td>
+  <div id="select-container">
+    <table id="selection">
+      <tr>
 
-      <td><h4> vs </h4></td>
+        <td>
+          <select name="homeTeam" onchange="start()">
+            <option value="" selected>Select Team</option>
+            {% if names %}
+            {% for name in names %}                                                          
+              <option value="{{ name }}">{{ name }}</option>
+            {% endfor %}
+            {% endif %}
+          </select>
+        </td>
 
-      <td>
-        <select name="awayTeam">
-          <option value"" selected>Select Team</option>
-          {% if names %}
+        <td><p> VS </p></td>
 
-          {% for name in names %}
-            <option value="{{ name }}">{{ name }}</option>
-          {% endfor %}
+        <td>
+          <select name="awayTeam" onchange="start()">
+            <option value"" selected>Select Team</option>
+            {% if names %}
 
-          {% endif %}
-        </select>
-      </td>
+            {% for name in names %}
+              <option value="{{ name }}">{{ name }}</option>
+            {% endfor %}
 
-      <td><button type="submit" onclick="start()">Compare</button></td>
+            {% endif %}
+          </select>
+        </td>
+      </tr>
+    </table>
+  </div>
 
-    </tr>
-  </table>
-
-
-  <div id="homeStats" hidden>
+  <div id="homeStats" class="display" hidden>
     <table >
       <!-- Javascript will populate these stats based on the json info it recieved -->
       <th id="homeTableHeader"></th>
 
       <tr>
-        <p id="homeName" style="text-align:center"></p>
+  
         <td id="homeGraphs">
             <canvas id="homePie"></canvas>
         </td>
@@ -54,6 +53,9 @@
       </tr>
     </table>
 
+    <br>
+
+    <p id="homeName" style="text-align:center"></p>
     <table style="width: 100%;" id="homeTable">
       <tbody>
           <tr>
@@ -119,13 +121,13 @@
 
   <br>
 
-  <div id="awayStats" hidden>
+  <div id="awayStats" class="display" hidden>
     <table >
       <!-- Javascript will populate these stats based on the json info it recieved -->
       
       <th id="awayTabeHeader"></th>
       <tr>
-        <p id="awayName" style="text-align:center"></p>
+        
         <td id="awayGraphs">
           <canvas id="awayPie"></canvas>
         </td>
@@ -137,6 +139,9 @@
       </tr>
     </table>
 
+    <br>
+
+    <p id="awayName" style="text-align:center"></p>
     <table style="width: 100%;" id="awayTable">
       <tbody>
           <tr>
@@ -202,11 +207,13 @@
   <br>
 
   <div id="prediction" hidden>
-    <button id="predict" onclick="getAnalysis()">Get Analysis</button>
+    <div id="predict-container">
+      <button id="predict" onclick="getAnalysis()">Get Analysis</button>
+    </div>
     <table id="prediction">
       <tr>
         <td colspan="4">
-          <code id="analysis"></code>
+          <pre id="analysis"></pre>
         </td>
       </tr>
     </table>
