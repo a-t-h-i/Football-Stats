@@ -1,93 +1,70 @@
 #!/usr/bin/python3
 from ai import prediction
 from calc import calculate
-import glob, pandas as pd
-from dbox import drop
+from rotowire import api
 
 
 class app(object):
-    
-    def __init__(self, id):
-        drop.check() #Check for the latest data
-        self.object_id = id
-        self.csv_path = 'csv'
-        self.csv_files = glob.glob(self.csv_path + '/*.csv')
-        self.df_list = []
-        [self.df_list.append(self._read_file(file)) for file in self.csv_files]
-        self.df = pd.concat(self.df_list, ignore_index=True)
-        self.rows, self.columns = self.df.shape
-        self.teams = self._create_teams_list()
+    def __init__(self):
+        self.names, self.teams = api.stats()
         self.team_stats = self._create_stats()
-        self.home_stats = ""
-        self.away_stats = ""
-        
-    
-    def _read_file(self, file):
-        return pd.read_csv(file, header=1)
-
-
-    def _create_teams_list(self):
-        result = []
-        for i in range(self.rows):
-            result.append(self.df.loc[i, :].values.flatten().tolist())
-        return result
-
 
     def get_names(self):
-        names = []
-        [names.append(team['Name']) for team in self.team_stats]
-        names.sort()
-        return names
-
+        return self.names
 
     def _to_json(self, data):
         statistics = {
-            'Name': data[0],
-            'Position': int(data[1]),
-            'Points': int(data[2]),
-            'Played': int(data[3]),
-            'Won': int(data[4]),
-            'Lost': int(data[6]),
-            'Draws': int(data[5]),
-            'Goals': int(data[7]),
-            'Conceded': int(data[8]),
-            'AwayPlayed': int(data[21]),
-            'AwayGoals': int(data[25]),
-            'AwayConceded': int(data[26]),
-            'AwayWins': int(data[22]),
-            'AwayLost': int(data[24]),
-            'AwayDraws': int(data[23]),
-            'HomePlayed': int(data[12]),
-            'HomeGoals': int(data[16]),
-            'HomeConceded': int(data[17]),
-            'HomeWins': int(data[13]),
-            'HomeLoses': int(data[15]),
-            'HomeDraws': int(data[14]),
-            'AverageGoals': calculate.average_goals(data[7], data[3]),
-            'WinPercentage': calculate.win_percentage(data[3], data[4]),
-            'LosePercentage': calculate.lose_percentage(data[3], data[6]),
-            'DrawPercentage': calculate.draw_percentage(data[3], data[5]),
-            'AverageHomeGoals': calculate.average_goals(data[16], data[12]),
-            'HomeWinPercentage': calculate.win_percentage(data[12], data[13]),
-            'HomeDrawsPercentage': calculate.draw_percentage(data[12], data[14]),
-            'HomeLosePercentage': calculate.lose_percentage(data[12], data[15]),
-            'AverageAwayGoals': calculate.average_goals(data[25], data[21]),
-            'AwayWinPercentage': calculate.win_percentage(data[21], data[22]),
-            'AwayLosePercentage': calculate.lose_percentage(data[21], data[24]),
-            'AwayDrawPercentage': calculate.draw_percentage(data[21], data[23]),
+            "Name": data["team"],
+            "Position": int(data["totalrank"]),
+            "Points": int(data["totalp"]),
+            "Played": int(data["totalm"]),
+            "Won": int(data["totalw"]),
+            "Lost": int(data["totall"]),
+            "Draws": int(data["totald"]),
+            "Goals": int(data["totalg"]),
+            "Conceded": int(data["totalga"]),
+            "AwayPlayed": int(data["awaym"]),
+            "AwayGoals": int(data["awayg"]),
+            "AwayConceded": int(data["awayga"]),
+            "AwayWins": int(data["awayw"]),
+            "AwayLost": int(data["awayl"]),
+            "AwayDraws": int(data["awayd"]),
+            "HomePlayed": int(data["homem"]),
+            "HomeGoals": int(data["homeg"]),
+            "HomeConceded": int(data["homega"]),
+            "HomeWins": int(data["homew"]),
+            "HomeLoses": int(data["homel"]),
+            "HomeDraws": int(data["homed"]),
+            "AverageGoals": calculate.average_goals(data["totalg"], data["totalm"]),
+            "WinPercentage": calculate.win_percentage(data["totalm"], data["totalw"]),
+            "LosePercentage": calculate.lose_percentage(data["totalg"], data["totall"]),
+            "DrawPercentage": calculate.draw_percentage(data["totalm"], data["totald"]),
+            "AverageHomeGoals": calculate.average_goals(data["homeg"], data["homem"]),
+            "HomeWinPercentage": calculate.win_percentage(data["homem"], data["homew"]),
+            "HomeDrawsPercentage": calculate.draw_percentage(
+                data["homem"], data["homed"]
+            ),
+            "HomeLosePercentage": calculate.lose_percentage(
+                data["homem"], data["homel"]
+            ),
+            "AverageAwayGoals": calculate.average_goals(data["awayg"], data["awaym"]),
+            "AwayWinPercentage": calculate.win_percentage(data["awaym"], data["awayw"]),
+            "AwayLosePercentage": calculate.lose_percentage(
+                data["awaym"], data["awayl"]
+            ),
+            "AwayDrawPercentage": calculate.draw_percentage(
+                data["awaym"], data["awayd"]
+            ),
         }
         return statistics
-
 
     def _create_stats(self):
         stats_list = []
         [stats_list.append(self._to_json(team)) for team in self.teams]
         return stats_list
-    
-    
+
     def get_stats(self):
         return self.team_stats
-    
 
     def _ai_prompt(self, home_team, away_team):
         return f"""
@@ -116,6 +93,6 @@ class app(object):
     model and should be used for entertainment purposes only. Be advised not to make financial decisions based on them.'
     """
 
-
     def get_prediction(self, home, away):
         return prediction.ask(self._ai_prompt(home, away))
+
