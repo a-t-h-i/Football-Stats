@@ -1,4 +1,5 @@
 def average_goals(goals_scored, games_played):
+    #Test comment
     if (int(goals_scored) == 0) or (int(games_played) == 0):
         return 0.0;
         
