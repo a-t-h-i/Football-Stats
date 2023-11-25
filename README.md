@@ -1,4 +1,5 @@
 <img src="https://cdn.dribbble.com/users/962944/screenshots/14138307/media/ca3377660c3d2053c9d91ac175871429.gif" alt="Stats" width="1000" height="200">
+(The site might take a while to load because I'm using a free service that stops the web app when not in use)
 <h2>Football Stats</h2>
 https://football-stats-rkzp.onrender.com/
 <p>Football stats is a tool that allows you to compare the performance of two football teams.
