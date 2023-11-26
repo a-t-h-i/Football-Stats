@@ -1,5 +1,5 @@
 Django
-openai
+openai==1.0.0
 pandas
 requests
 dj-database-url
