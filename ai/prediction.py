@@ -1,19 +1,21 @@
-import openai
 import os
+from openai import OpenAI
 
-
-openai.api_key = os.environ.get("MY_KEY")
+client = OpenAI(
+    api_key=os.environ.get("MY_KEY"),
+)
 
 
 def ask(query):
-    completions = openai.Completion.create(
-        engine="gpt-3.5-turbo",
-        prompt=query,
-        max_tokens=512,
-        n=1,
-        stop=None,
-        temperature=0.6,
+    completions = client.chat.completions.create(
+        messages=[
+            {
+                "role": "user",
+                "content": query,
+            }
+        ],
+        model="gpt-3.5-turbo",
     )
-
     response = completions.choices[0].text
+    
     return response
