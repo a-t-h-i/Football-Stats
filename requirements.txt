@@ -1,8 +1,7 @@
 Django
-openai==1.0.0
 pandas
 requests
 dj-database-url
 gunicorn
-dropbox
 psycopg2-binary 
+google-generativeai

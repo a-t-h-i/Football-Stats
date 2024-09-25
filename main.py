@@ -13,7 +13,7 @@ class app(object):
         return self.names
 
     def _to_json(self, data):
-        statistics = {
+        return {
             "Name": data["team"],
             "Position": int(data["totalrank"]),
             "Points": int(data["totalp"]),
@@ -56,7 +56,6 @@ class app(object):
                 data["awaym"], data["awayd"]
             ),
         }
-        return statistics
 
     def _create_stats(self):
         stats_list = []
@@ -77,7 +76,7 @@ class app(object):
     Away Team:
     {away_team}
     
-    Using only the data provided, please do the following:
+    Using only the data provided, do the following:
 
     Write a paragraph that provides an in-depth analysis of both team's performance in the current season. Please compare their position 
     in the league, number of games played, wins, losses, draws, goals scored, goals conceded, and their form at home and away. Use your knowledge 
