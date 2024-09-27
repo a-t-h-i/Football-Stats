@@ -83,6 +83,8 @@ class app(object):
     - https://www.sofascore.com/
     - https://footystats.org/
     - https://www.flashscore.co.za/
+
+    If the above external sites were referenced, then credit them in your analysis.
     
     Give me a concise analysis of both team's performances in the current season. Compare their position 
     in the league, number of games played, wins, losses, draws, goals scored, goals conceded, and their form at home and away.
