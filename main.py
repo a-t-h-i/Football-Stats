@@ -77,10 +77,15 @@ class app(object):
     {away_team}
     
     Using only the data provided, do the following:
-
-    Write a paragraph that provides an in-depth analysis of both team's performance in the current season. Please compare their position 
-    in the league, number of games played, wins, losses, draws, goals scored, goals conceded, and their form at home and away. Use your knowledge 
-    of soccer to provide insights and predictions for their future performance.
+    You must use info from these websites to support your analysis:
+    - https://forebet.com
+    - https://www.fctables.com/
+    - https://www.sofascore.com/
+    - https://footystats.org/
+    - https://www.flashscore.co.za/
+    
+    Give me a concise analysis of both team's performances in the current season. Compare their position 
+    in the league, number of games played, wins, losses, draws, goals scored, goals conceded, and their form at home and away.
     What is the win percentage in the current season for both the teams? Please provide a clear and concise answer.
     What is the average goals per game in the current season for both teams? Please provide a clear and concise answer.
     What is the home team's win percentage in the current season? Please provide a clear and concise answer.
