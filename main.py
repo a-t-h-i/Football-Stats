@@ -93,5 +93,7 @@ class app(object):
     """
 
     def get_prediction(self, home, away):
-        return prediction.ask(self._ai_prompt(home, away))
+        ai_prediction = ""
+        ai_prediction = prediction.ask(self._ai_prompt(home, away))
+        return ai_prediction
 
