@@ -108,7 +108,7 @@ class app(object):
         padding = (line_width - len(title)) // 2
 
         # Format the line
-        output = f"Home Team Stats{home}\nAway Team Stats{away}\n\n\n\n\n\n{'_' * padding}{title}{'_' * padding}\n{prediction.ask(self._ai_prompt(home, away))}"
+        output = f"Home Team Stats:\n{home}\nAway Team Stats:\n{away}\n\n\n\n\n\n{'_' * padding}{title}{'_' * padding}\n{prediction.ask(self._ai_prompt(home, away))}"
 
         return output
 
