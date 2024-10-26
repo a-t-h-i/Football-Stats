@@ -100,7 +100,15 @@ class app(object):
     """
 
     def get_prediction(self, home, away):
-        ai_prediction = ""
-        ai_prediction = prediction.ask(self._ai_prompt(home, away))
-        return ai_prediction
+
+        line_width = 60
+        title = "AI PREDICTION"
+
+        # Calculate the padding on each side
+        padding = (line_width - len(title)) // 2
+
+        # Format the line
+        output = f"Home Team Stats{home}\nAway Team Stats{away}\n\n\n\n\n\n{'_' * padding}{title}{'_' * padding}\n{prediction.ask(self._ai_prompt(home, away))}"
+
+        return output
 
